@@ -1,6 +1,6 @@
 {
   "serverAddress":"http://localhost/ssie/tcs/veh",
-  "topicName":"Vehicule Tram",
+  "topicName":"topic_ssie",
   "tramNumber":20,
   "frequencyInSec":1,
   "companies": [

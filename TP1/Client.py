@@ -1,9 +1,14 @@
 import paho.mqtt.client as paho
+import json
+
+# open JSON file
+with open('data.json', 'r') as f:
+    data = json.load(f)
 
 def on_connect(client, userdata, flags, rc):
     print("Connected to broker with result code "+str(rc))
     # subscribe to topic_ssie when connected
-    client.subscribe("topic_ssie")
+    client.subscribe(data["topicName"])
 
 def on_message(client, userdata, msg):
     print("Received message '"+str(msg.payload)+"' on topic '"+

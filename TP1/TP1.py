@@ -5,22 +5,22 @@ import paho.mqtt.client as paho
 import time
 import re
 
-# fonction pour convertir une date en timestamp
+# function to convert a date to a timestamp
 def to_timestamp(dt):
     return int(dt.timestamp())
 
-# ouverture du fichier JSON
+# open JSON file
 with open('data.json', 'r') as f:
     data = json.load(f)
 
 def find_object_by_id_and_create_tram(id, type, client):
-    # boucle sur les entreprises
+    # loop over companies
     for company in data['companies']:
-        # boucle sur les types de véhicules
+        # loop over vehicle types
         for vehicleType in company['vehicleTypes']:
-            # boucle sur les véhicules
+           # loop over vehicles
             for vehicle in vehicleType['vehicles']:
-                # génération de la tram si on est sur le bon ID
+                # generate tram if we have the correct ID
                 if (vehicle['id'] == id):
                     if (type == "Alstom"):
                         return alstomTram(vehicle,vehicleType, client)
@@ -30,34 +30,35 @@ def find_object_by_id_and_create_tram(id, type, client):
 def alstomTram(vehicle, vehicleType, client):
     pattern = r'^[A-Za-z0-9.]*$'
     vin = vehicle['vin']
-    # latitude/longitude toulouse
+    # Toulouse latitude/longitude
     latitude = round(random.uniform(43.5, 43.7),3)
     longitude = round(random.uniform(1.3, 1.6),4)
-    # entre 0 et 120 km/h
+    # speed between 0 and 120 km/h
     allure = round(random.uniform(0, 120),1)
     date = datetime.datetime.now()
     timestamp = to_timestamp(date)
     passagers = random.randint(0, vehicleType['capacity'])
-    # entre 30 et 150L
-    consommation = round(random.uniform(30,150),1)
+    # consumption between 30 and 150L
+    consumption = round(random.uniform(30,150),1)
     vitesse = random.randint(1, 6)
-    # affichage de la tram
+    # pattern check
     if not (re.match(pattern, vin) and \
     re.match(pattern, str(latitude)) and \
     re.match(pattern, str(longitude)) and \
     re.match(pattern, str(allure)) and \
     re.match(pattern, str(passagers)) and \
-    re.match(pattern, str(consommation)) and \
+    re.match(pattern, str(consumption)) and \
     re.match(pattern, str(vitesse))):
         return ""
-    res = '{' + f"{vin}|{latitude}|{longitude}|{allure}|{timestamp}|{passagers}|{consommation}|{vitesse}" + '}'
+    res = '{' + f"{vin}|{latitude}|{longitude}|{allure}|{timestamp}|{passagers}|{consumption}|{vitesse}" + '}'
+    # display tram
     print(res)
     return res
 
 def otherTram(vehicle, vehicleType, client):
     pattern = r'^[A-Za-z0-9.]*$'
     possibleMsg = [14, 56, 125]
-    # choisi un type de message aléatoirement
+    # randomly choose a message type
     msgType = possibleMsg[random.randint(0,2)]
     vin = vehicle['vin']
     date = datetime.datetime.now()
@@ -81,63 +82,73 @@ def otherTram(vehicle, vehicleType, client):
         res = '{' + f"id={vin};msg={msgType};ts={timestamp};lat={latitude};long={longitude};r={reservoir}" + '}'
     else :
         allure = round(random.uniform(0, 120),1)
-        consommation = round(random.uniform(30,150),1)
+        consumption = round(random.uniform(30,150),1)
         vitesse = random.randint(1, 6)
         if not (re.match(pattern, str(allure)) and \
-        re.match(pattern, str(consommation)) and \
+        re.match(pattern, str(consumption)) and \
         re.match(pattern, str(vitesse))):
             return ""
-        res = '{' + f"id={vin};msg={msgType};ts={timestamp};a={allure};v={vitesse};c={consommation}" + '}'
+        res = '{' + f"id={vin};msg={msgType};ts={timestamp};a={allure};v={vitesse};c={consumption}" + '}'
     print(res)
     return res
 
-#créer une list avec tous les id de véhicule possible
-def getAllVehicle():
+#create list with all vehicule id possible
+def getAllVehicle(type):
     idVehicle = []
     for company in data['companies']:
-        # boucle sur les types de véhicules
+        # loop on vehicule types
         for vehicleType in company['vehicleTypes']:
-            # boucle sur les véhicules
-            for vehicle in vehicleType['vehicles']:
-                idVehicle.append(vehicle['id'])
+            check = False
+            #we only take the vehicule of the type we're interested in (Alstom/other)
+            for e in type:
+                if (e in vehicleType["manufacturer"]):
+                    check = True
+            if (check):
+            # loop on vehicule
+                for vehicle in vehicleType['vehicles']:
+                    idVehicle.append(vehicle['id'])
     return idVehicle
 
-#créer une liste d'indice aléatoire
+#create list of random index
 def generateRandom(size):
     num_random_numbers = data['tramNumber']
     min_number = 0
     max_number = size
-    # Genère une liste de nombre aléatoire
-    random_numbers = random.sample(range(min_number, max_number), num_random_numbers)
+    if (num_random_numbers > size):
+        random_numbers = random.sample(range(min_number, max_number), size)
+        newSize = size
+        while(num_random_numbers > newSize):
+            random_numbers.append(random.randint(min_number, max_number - 1))
+            newSize += 1
+    else:
+    # generate a list of random number
+        random_numbers = random.sample(range(min_number, max_number), num_random_numbers)
     return random_numbers
 
-#affiche 10 tram aléatoire a 'frequencyInSec' secondes d'interval, 5 version Alstom et 5 version Heuliez, EvoBus, Poma
+
+#print 'numberOfMessage' random trams at 'frequencyInSec' second interval of 'tramType type (Alstom or other)
+def startSending(numberOfMessage, type, tramType,client):
+    idVehicle = getAllVehicle(type)
+    for i in range(numberOfMessage):
+        random_numbers = generateRandom(len(idVehicle))
+        res = ""
+        for number in random_numbers: 
+            newTram = find_object_by_id_and_create_tram(idVehicle[number], tramType,client)
+            if (len(newTram)>0):
+                res += newTram
+        client.publish(data["topicName"], "val_" + res)
+        print('\n')
+        time.sleep(data['frequencyInSec'])
+
+
+#create client and start publishing 5 messages for each tram type
 def main():
     # create client object
     client = paho.Client("SSIE")
     # establish connection
     client.connect("localhost", 1883)
-    # start the network loop
-    idVehicle = getAllVehicle()
-    random_numbers = generateRandom(len(idVehicle))
-    for i in range(5):
-        res = ""
-        for number in random_numbers: 
-            newTram = find_object_by_id_and_create_tram(idVehicle[number], "Alstom",client)
-            if (len(newTram)>0):
-                res += newTram
-        client.publish("topic_ssie", "val_" + res)
-        print('\n')
-        time.sleep(data['frequencyInSec'])
-    for i in range(5):
-        res = ""
-        for number in random_numbers: 
-            newTram = find_object_by_id_and_create_tram(idVehicle[number], "Other", client)
-            if (len(newTram)>0):
-                res += newTram
-        client.publish("topic_ssie", "val_" + res)
-        print('\n')
-        time.sleep(data['frequencyInSec'])
+    startSending(5, ["Alstom"], "Alstom" ,client)
+    startSending(5, ["Heuliez", "EvoBus", "Poma"], "Other" ,client)
     client.disconnect()
 
 main()
