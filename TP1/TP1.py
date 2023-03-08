@@ -114,6 +114,7 @@ def generateRandom(size):
     num_random_numbers = data['tramNumber']
     min_number = 0
     max_number = size
+    # gestion of a special case : if the ram size is bigger than the different vehicule exiting in this type, in will randomly duplicate some vehicule in the trams
     if (num_random_numbers > size):
         random_numbers = random.sample(range(min_number, max_number), size)
         newSize = size
