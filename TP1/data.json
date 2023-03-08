@@ -1,0 +1,331 @@
+{
+  "serverAddress":"http://localhost/ssie/tcs/veh",
+  "topicName":"Vehicule Tram",
+  "tramNumber":20,
+  "frequencyInSec":1,
+  "companies": [
+      {
+          "id": 1,
+          "name": "SNCF",
+          "vehicleTypes": [
+              {
+                  "id": 1,
+                  "name": "T.E.R",
+                  "capacity": 342,
+                  "manufacturer": "Bombardier & Alstom",
+                  "number": 450,
+                  "companyId": 1,
+                  "vehicles": [
+                      {
+                          "id": 1,
+                          "vin": "VF7VDA5BABA602430",
+                          "vehicleTypeId": 1
+                      },
+                      {
+                          "id": 2,
+                          "vin": "VF7VDA5BABA602431",
+                          "vehicleTypeId": 1
+                      },
+                      {
+                          "id": 3,
+                          "vin": "VF7VDA5BABA602432",
+                          "vehicleTypeId": 1
+                      },
+                      {
+                          "id": 4,
+                          "vin": "VF7VDA5BABA602433",
+                          "vehicleTypeId": 1
+                      }
+                  ]
+              }
+          ]
+      },
+      {
+          "id": 2,
+          "name": "TISSEO",
+          "vehicleTypes": [
+              {
+                  "id": 2,
+                  "name": "Tramway",
+                  "capacity": 300,
+                  "manufacturer": "Alstom",
+                  "number": 28,
+                  "companyId": 2,
+                  "vehicles": [
+                      {
+                          "id": 5,
+                          "vin": "VF7VDA55662202434",
+                          "vehicleTypeId": 2
+                      },
+                      {
+                          "id": 6,
+                          "vin": "VF7VDA55662202435",
+                          "vehicleTypeId": 2
+                      },
+                      {
+                          "id": 7,
+                          "vin": "VF7VDA55662202436",
+                          "vehicleTypeId": 2
+                      },
+                      {
+                          "id": 8,
+                          "vin": "VF7VDA55662202437",
+                          "vehicleTypeId": 2
+                      },
+                      {
+                          "id": 9,
+                          "vin": "VF7VDA55662202438",
+                          "vehicleTypeId": 2
+                      },
+                      {
+                          "id": 10,
+                          "vin": "VF7VDA55662202439",
+                          "vehicleTypeId": 2
+                      },
+                      {
+                          "id": 11,
+                          "vin": "VF7VDA5566220243A",
+                          "vehicleTypeId": 2
+                      }
+                  ]
+              },
+              {
+                  "id": 3,
+                  "name": "Metro",
+                  "capacity": 224,
+                  "manufacturer": "Alstom",
+                  "number": 116,
+                  "companyId": 2,
+                  "vehicles": [
+                      {
+                          "id": 17,
+                          "vin": "VF7VDF555AA569100",
+                          "vehicleTypeId": 3
+                      },
+                      {
+                          "id": 18,
+                          "vin": "VF7VDF555AA569101",
+                          "vehicleTypeId": 3
+                      },
+                      {
+                          "id": 19,
+                          "vin": "VF7VDF555AA569102",
+                          "vehicleTypeId": 3
+                      },
+                      {
+                          "id": 20,
+                          "vin": "VF7VDF555AA569103",
+                          "vehicleTypeId": 3
+                      }
+                  ]
+              },
+              {
+                  "id": 4,
+                  "name": "Bus standards",
+                  "capacity": 63,
+                  "manufacturer": "Heuliez",
+                  "number": 350,
+                  "companyId": 2,
+                  "vehicles": [
+                    {
+                      "id": 21,
+                      "vin": "VF7VDF0000DFD5961",
+                      "vehicle_type_id": 4
+                    },
+                    {
+                        "id": 22,
+                        "vin": "VF7VDF0000DFD5962",
+                        "vehicle_type_id": 4
+                    },
+                    {
+                        "id": 23,
+                        "vin": "VF7VDF0000DFD5963",
+                        "vehicle_type_id": 4
+                    },
+                    {
+                        "id": 24,
+                        "vin": "VF7VDF0000DFD5964",
+                        "vehicle_type_id": 4
+                    }
+                  ]
+              },
+              {
+                  "id": 5,
+                  "name": "Bus articulés",
+                  "capacity": 140,
+                  "manufacturer": "EvoBus",
+                  "number": 206,
+                  "companyId": 2,
+                  "vehicles": [
+                    {
+                      "id": 25,
+                      "vin": "VF7VDF0000DFD5965",
+                      "vehicle_type_id": 5
+                    },
+                    {
+                        "id": 26,
+                        "vin": "VF7VDF0000DFD5966",
+                        "vehicle_type_id": 5
+                    },
+                    {
+                        "id": 27,
+                        "vin": "VF7VDF0000DFD5967",
+                        "vehicle_type_id": 5
+                    },
+                    {
+                        "id": 28,
+                        "vin": "VF7VDF0000DFD5968",
+                        "vehicle_type_id": 5
+                    }
+                  ]
+              },
+              {
+                  "id": 6,
+                  "name": "Mini Bus",
+                  "capacity": 20,
+                  "manufacturer": "Heuliez",
+                  "number": 20,
+                  "companyId": 2,
+                  "vehicles": [
+                    {
+                      "id": 29,
+                      "vin": "VF7VDF0000DFD5910",
+                      "vehicle_type_id": 6
+                    },
+                    {
+                      "id": 30,
+                      "vin": "VF7VDF0000DFD5911",
+                      "vehicle_type_id": 6
+                    },
+                    {
+                      "id": 31,
+                      "vin": "VF7VDF0000DFD5912",
+                      "vehicle_type_id": 6
+                    },
+                    {
+                      "id": 32,
+                      "vin": "VF7VDF0000DFD5913",
+                      "vehicle_type_id": 6
+                    }
+                  ]
+              },
+              {
+                  "id": 7,
+                  "name": "Téléphérique",
+                  "capacity": 34,
+                  "manufacturer": "Poma",
+                  "number": 650,
+                  "companyId": 2,
+                  "vehicles": [
+                    {
+                      "id": 33,
+                      "vin": "VF7VDF0000DFD5914",
+                      "vehicle_type_id": 7
+                      },
+                      {
+                      "id": 34,
+                      "vin": "VF7VDF0000DFD5915",
+                      "vehicle_type_id": 7
+                      },
+                      {
+                      "id": 35,
+                      "vin": "VF7VDF0000DFD5916",
+                      "vehicle_type_id": 7
+                      },
+                      {
+                      "id": 36,
+                      "vin": "VF7VDF0000DFD5917",
+                      "vehicle_type_id": 7
+                      }
+                  ]
+              }
+          ]
+      },
+      {
+      "id": 3,
+          "name": "Taxis",
+          "vehicleTypes": [
+              {
+                "id": 8,
+                "name": "Independant",
+                "capacity": 6,
+                "manufacturer": "",
+                "number": 650,
+                "companyId": 3,
+                "vehicles": [
+                  {
+                    "id": 37,
+                    "vin": "VF7VDF0000DFD5918",
+                    "vehicle_type_id": 8
+                    },
+                    {
+                    "id": 38,
+                    "vin": "VF7544522FE263521",
+                    "vehicle_type_id": 8
+                    },
+                    {
+                    "id": 39,
+                    "vin": "VF7VAABB5654E5F54",
+                    "vehicle_type_id": 8
+                    },
+                    {
+                    "id": 40,
+                    "vin": "VF7VD002596ABCD52",
+                    "vehicle_type_id": 8
+                    },
+                    {
+                    "id": 41,
+                    "vin": "VF7V1235FEFE56982",
+                    "vehicle_type_id": 8
+                    },
+                    {
+                    "id": 42,
+                    "vin": "VF7V4549ADBC15212",
+                    "vehicle_type_id": 8
+                    },
+                    {
+                    "id": 43,
+                    "vin": "VF7CC45D595E245CD",
+                    "vehicle_type_id": 8
+                    },
+                    {
+                    "id": 44,
+                    "vin": "VF7V958614DD5258D",
+                    "vehicle_type_id": 8
+                    },
+                    {
+                    "id": 45,
+                    "vin": "VF7VDDEF98AB59DR6",
+                    "vehicle_type_id": 8
+                    },
+                    {
+                    "id": 46,
+                    "vin": "VF79516DD62156AB9",
+                    "vehicle_type_id": 8
+                    },
+                    {
+                    "id": 47,
+                    "vin": "VF7V521DEB56511A0",
+                    "vehicle_type_id": 8
+                    },
+                    {
+                    "id": 48,
+                    "vin": "VF7VDF0000DFD591B",
+                    "vehicle_type_id": 8
+                    },
+                    {
+                    "id": 49,
+                    "vin": "VF7V521DEB565111C",
+                    "vehicle_type_id": 8
+                    },
+                    {
+                    "id": 50,
+                    "vin": "VF7VDF00DDDFD591D",
+                    "vehicle_type_id": 8
+                    }
+                ]
+              }
+            ]
+      }
+  ]
+}
