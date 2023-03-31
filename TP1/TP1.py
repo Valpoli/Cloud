@@ -114,7 +114,7 @@ def generateRandom(size):
     num_random_numbers = data['tramNumber']
     min_number = 0
     max_number = size
-    # gestion of a special case : if the ram size is bigger than the different vehicule exiting in this type, in will randomly duplicate some vehicule in the trams
+    # gestion of a special case : if the ram size is bigger than the different vehicule exiting in this type, in will randomly duplicate some vehicule in the trams6
     if (num_random_numbers > size):
         random_numbers = random.sample(range(min_number, max_number), size)
         newSize = size
@@ -139,6 +139,7 @@ def startSending(numberOfMessage, type, tramType,client):
                 res += newTram
         client.publish(data["topicName"], "val_" + res)
         print('\n')
+        #mettre dans variable locale
         time.sleep(data['frequencyInSec'])
 
 
@@ -147,7 +148,7 @@ def main():
     # create client object
     client = paho.Client("SSIE")
     # establish connection
-    client.connect("localhost", 1883)
+    client.connect("localhost", 1884)
     startSending(5, ["Alstom"], "Alstom" ,client)
     startSending(5, ["Heuliez", "EvoBus", "Poma"], "Other" ,client)
     client.disconnect()
