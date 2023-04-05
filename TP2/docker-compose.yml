@@ -6,6 +6,7 @@ services:
     ports:
       - "1884:1883"
       - "8161:8161"
+    container_name: activemq
   nifi:
     image: apache/nifi:1.18.0
     restart: on-failure:1

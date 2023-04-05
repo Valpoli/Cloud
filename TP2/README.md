@@ -8,8 +8,8 @@
 
 ## L’URL qui sera utilisée par votre simulateur de trames pour envoyer ses messages MQTT à ActiveMQ
 
-* `tcp://localhost:1884`
+* `http://localhost:1884/`
 
 ## L’URL qui sera utilisée par Nifi pour consommer les messages MQTT d’ActiveMQ
 
-* `tcp://localhost:8161`
+* `tcp://activemq:1883`
