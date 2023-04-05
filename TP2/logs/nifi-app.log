@@ -13648,3 +13648,9 @@ Caused by: java.net.ConnectException: Connection refused (Connection refused)
 2023-04-05 13:28:03,735 INFO [pool-7-thread-1] o.a.n.c.r.WriteAheadFlowFileRepository Successfully checkpointed FlowFile Repository with 410 records in 25 milliseconds
 2023-04-05 13:28:21,759 INFO [Cleanup Archive for default] o.a.n.c.repository.FileSystemRepository Successfully deleted 0 files (0 bytes) from archive
 2023-04-05 13:28:21,760 INFO [Cleanup Archive for default] o.a.n.c.repository.FileSystemRepository Archive cleanup completed for container default; will now allow writing to this container. Bytes used = 10.58 GB, bytes free = 52.12 GB, capacity = 62.69 GB
+2023-04-05 13:28:23,736 INFO [pool-7-thread-1] o.a.n.c.r.WriteAheadFlowFileRepository Initiating checkpoint of FlowFile Repository
+2023-04-05 13:28:23,737 INFO [pool-7-thread-1] o.a.n.c.r.WriteAheadFlowFileRepository Successfully checkpointed FlowFile Repository with 410 records in 0 milliseconds
+2023-04-05 13:28:43,738 INFO [pool-7-thread-1] o.a.n.c.r.WriteAheadFlowFileRepository Initiating checkpoint of FlowFile Repository
+2023-04-05 13:28:43,739 INFO [pool-7-thread-1] o.a.n.c.r.WriteAheadFlowFileRepository Successfully checkpointed FlowFile Repository with 410 records in 0 milliseconds
+2023-04-05 13:29:03,740 INFO [pool-7-thread-1] o.a.n.c.r.WriteAheadFlowFileRepository Initiating checkpoint of FlowFile Repository
+2023-04-05 13:29:03,740 INFO [pool-7-thread-1] o.a.n.c.r.WriteAheadFlowFileRepository Successfully checkpointed FlowFile Repository with 410 records in 0 milliseconds
