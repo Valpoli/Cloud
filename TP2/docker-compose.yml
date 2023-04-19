@@ -7,6 +7,7 @@ services:
       - "1884:1883"
       - "8161:8161"
     container_name: activemq
+
   nifi:
     image: apache/nifi:1.18.0
     restart: on-failure:1
@@ -20,3 +21,4 @@ services:
       NIFI_SENSITIVE_PROPS_KEY: OyXbbjYjE0iXsJzSGuIn
     entrypoint: > 
       bash -c "echo Overwriting entrypoint && echo Replace path for flow.xml.gz && sed -i 's#=./conf/flow.xml.gz#=./flow/flow.xml.gz#g' /opt/nifi/nifi-current/conf/nifi.properties && /opt/nifi/scripts/start.sh"
+##network dans le cours

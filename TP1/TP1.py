@@ -70,7 +70,7 @@ def otherTram(vehicle, vehicleType, client):
         passagers = random.randint(0, vehicleType['capacity'])
         if not (re.match(pattern, str(passagers))):
             return ""
-        res = f"id={vin};msg={msgType};ts={timestamp};pnb={passagers}"
+        res = f"id={vin};msg={msgType};ts={timestamp};pnb={passagers};"
     elif (msgType == 14):
         latitude = round(random.uniform(43.5, 43.7),3)
         longitude = round(random.uniform(1.3, 1.6),4)
@@ -79,7 +79,7 @@ def otherTram(vehicle, vehicleType, client):
         re.match(pattern, str(longitude)) and \
         re.match(pattern, str(reservoir))):
             return ""
-        res = f"id={vin};msg={msgType};ts={timestamp};lat={latitude};long={longitude};r={reservoir}"
+        res = f"id={vin};msg={msgType};ts={timestamp};lat={latitude};long={longitude};r={reservoir};"
     else :
         allure = round(random.uniform(0, 120),1)
         consumption = round(random.uniform(30,150),1)
@@ -88,7 +88,7 @@ def otherTram(vehicle, vehicleType, client):
         re.match(pattern, str(consumption)) and \
         re.match(pattern, str(vitesse))):
             return ""
-        res = f"id={vin};msg={msgType};ts={timestamp};a={allure};v={vitesse};c={consumption}"
+        res = f"id={vin};msg={msgType};ts={timestamp};a={allure};v={vitesse};c={consumption};"
     print(res)
     return res
 
