@@ -3,6 +3,7 @@
   "topicName":"topic_ssie",
   "tramNumber":20,
   "frequencyInSec":1,
+  "numberOfMessage":5,
   "companies": [
       {
           "id": 1,

@@ -150,8 +150,8 @@ def main():
     client = paho.Client("SSIE")
     # establish connection
     client.connect("localhost", 1884)
-    startSending(5, ["Alstom"], "Alstom" ,client)
-    startSending(5, ["Heuliez", "EvoBus", "Poma"], "Other" ,client)
+    startSending(data['numberOfMessage'], ["Alstom"], "Alstom" ,client)
+    startSending(data['numberOfMessage'], ["Heuliez", "EvoBus", "Poma"], "Other" ,client)
     client.disconnect()
 
 main()
