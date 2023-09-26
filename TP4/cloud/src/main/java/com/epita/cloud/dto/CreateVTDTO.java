@@ -1,30 +1,18 @@
 package com.epita.cloud.dto;
 
-import com.epita.cloud.model.Company;
-
-public class VehicleTypeDTO {
-    private Integer id;
+public class CreateVTDTO {
     private String name;
     private Integer capacity;
     private String manufacturer;
-    private Company companyName;
+    private Integer companyId;
 
-    public VehicleTypeDTO(Integer id, String name, Integer capacity, String manufacturer, Company company) {
-        this.id = id;
+    public CreateVTDTO(String name, Integer capacity, String manufacturer, Integer companyId) {
         this.name = name;
         this.capacity = capacity;
         this.manufacturer = manufacturer;
-        this.companyName = company;
+        this.companyId = companyId;
     }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
+    
     public String getName() {
         return name;
     }
@@ -49,11 +37,12 @@ public class VehicleTypeDTO {
         this.manufacturer = manufacturer;
     }
 
-    public Company getCompanyName() {
-        return companyName;
+    public Integer getCompanyId() {
+        return companyId;
     }
 
-    public void setCompanyName(Company companyName) {
-        this.companyName = companyName;
+    public void setCompanyId(Integer companyId) {
+        this.companyId = companyId;
     }
+    
 }

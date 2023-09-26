@@ -1,4 +1,4 @@
-package com.epita.cloud.dto;
+package com.epita.cloud;
 
 import org.hibernate.validator.constraints.Length;
 

@@ -1,5 +1,7 @@
 package com.epita.cloud.model;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,7 +15,8 @@ import jakarta.persistence.Table;
 @Table(name = "VEHICLE_TYPE")
 public class VehicleType {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator="seq")
+    @GenericGenerator(name = "seq", strategy="increment")
     @Column(name = "ID")
     private Integer id;
 
@@ -29,6 +32,16 @@ public class VehicleType {
     @ManyToOne
     @JoinColumn(name = "COMPANY_ID")
     private Company company;
+
+    public VehicleType() {
+    }
+
+    public VehicleType(String name, Integer capacity, String manufacturer, Company company) {
+        this.name = name;
+        this.capacity = capacity;
+        this.manufacturer = manufacturer;
+        this.company = company;
+    }
 
     public Integer getId() {
         return id;

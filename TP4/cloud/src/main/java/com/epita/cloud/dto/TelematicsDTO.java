@@ -3,7 +3,7 @@ package com.epita.cloud.dto;
 public class TelematicsDTO {
     private String vehicleId;
     private String localTime;
-    private int passengerNumber;
+    private Integer passengerNumber;
 
     // getters and setters
 
@@ -23,11 +23,11 @@ public class TelematicsDTO {
         this.localTime = localTime;
     }
 
-    public int getPassengerNumber() {
+    public Integer getPassengerNumber() {
         return passengerNumber;
     }
 
-    public void setPassengerNumber(int passengerNumber) {
+    public void setPassengerNumber(Integer passengerNumber) {
         this.passengerNumber = passengerNumber;
     }
 }

@@ -7,7 +7,7 @@ import re
 
 # function to convert a date to a timestamp
 def to_timestamp(dt):
-    return int(dt.timestamp())
+    return Integer(dt.timestamp())
 
 # open JSON file
 with open('data.json', 'r') as f:

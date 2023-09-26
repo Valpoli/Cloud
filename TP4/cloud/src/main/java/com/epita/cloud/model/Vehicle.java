@@ -10,11 +10,14 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.util.Date;
 
+import org.hibernate.annotations.GenericGenerator;
+
 @Entity
 @Table(name = "VEHICLE")
 public class Vehicle {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator="seq")
+    @GenericGenerator(name = "seq", strategy="increment")
     @Column(name = "ID")
     private Integer id;
 

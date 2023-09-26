@@ -9,6 +9,6 @@ public interface CompanyRepository extends JpaRepository<Company, Integer> {
     @Query("SELECT c.name FROM Vehicle v " +
            "INNER JOIN v.vehicleType vt " +
            "INNER JOIN vt.company c " +
-           "WHERE v.vin LIKE %:vin%")
+           "WHERE v.vin LIKE :vin")
     String findCompanyNameByVin(String vin);
 }
