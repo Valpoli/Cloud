@@ -92,19 +92,19 @@ def otherTram(vehicle, vehicleType, client):
     print(res)
     return res
 
-#create list with all vehicule id possible
+#create list with all vehicle id possible
 def getAllVehicle(type):
     idVehicle = []
     for company in data['companies']:
-        # loop on vehicule types
+        # loop on vehicle types
         for vehicleType in company['vehicleTypes']:
             check = False
-            #we only take the vehicule of the type we're interested in (Alstom/other)
+            #we only take the vehicle of the type we're interested in (Alstom/other)
             for e in type:
                 if (e in vehicleType["manufacturer"]):
                     check = True
             if (check):
-            # loop on vehicule
+            # loop on vehicle
                 for vehicle in vehicleType['vehicles']:
                     idVehicle.append(vehicle['id'])
     return idVehicle
@@ -114,7 +114,7 @@ def generateRandom(size):
     num_random_numbers = data['tramNumber']
     min_number = 0
     max_number = size
-    # gestion of a special case : if the ram size is bigger than the different vehicule exiting in this type, in will randomly duplicate some vehicule in the trams6
+    # gestion of a special case : if the ram size is bigger than the different vehicle exiting in this type, in will randomly duplicate some vehicle in the trams6
     if (num_random_numbers > size):
         random_numbers = random.sample(range(min_number, max_number), size)
         newSize = size

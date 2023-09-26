@@ -22,7 +22,7 @@
 
 ## Random
 
-* The vehicule are randomly choose between the possible elements
+* The vehicle are randomly choose between the possible elements
 
 ## Autor
 
