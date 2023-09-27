@@ -5,8 +5,6 @@ public class TelematicsDTO {
     private String localTime;
     private Integer passengerNumber;
 
-    // getters and setters
-
     public String getVehicleId() {
         return vehicleId;
     }

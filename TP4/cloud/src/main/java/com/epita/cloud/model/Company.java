@@ -21,6 +21,13 @@ public class Company {
     @Column(name = "NAME")
     private String name;
 
+    public Company(String name) {
+        this.name = name;
+    }
+
+    public Company() {
+    }
+
     public Integer getId() {
         return id;
     }

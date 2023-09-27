@@ -15,6 +15,6 @@ public interface VehicleTypeRepository extends JpaRepository<VehicleType,Integer
            "WHERE vt.name LIKE :vehicleTypeName")
     List<Integer> findAllVehicleType(String vehicleTypeName);
 
-    @Query("SELECT vt FROM VehicleType vt WHERE vt.name LIKE :newVTName")
+    @Query("SELECT name FROM VehicleType vt WHERE vt.name LIKE :newVTName")
     Optional<VehicleType> checkVTExistence(String newVTName);
 }

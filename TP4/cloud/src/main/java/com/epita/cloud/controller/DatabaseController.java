@@ -1,25 +1,21 @@
 package com.epita.cloud.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.epita.cloud.dto.VehicleTypeDTO;
+import com.epita.cloud.dto.CompanyDTO;
 import com.epita.cloud.dto.CreateVTDTO;
 import com.epita.cloud.model.Company;
 import com.epita.cloud.model.VehicleType;
@@ -28,6 +24,8 @@ import com.epita.cloud.services.VehicleRepository;
 import com.epita.cloud.services.VehicleTypeRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import jakarta.transaction.Transactional;
 
 @RestController
 public class DatabaseController {
@@ -94,7 +92,7 @@ public class DatabaseController {
         try {
             Optional<VehicleType> ovt = vehicleTypeRepository.findById(VtID);
             if (! ovt.isPresent()) {
-                return new ResponseEntity<String>("Vehicle type to change don't exist.", HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<String>("Vehicle type to change doesn't exist.", HttpStatus.BAD_REQUEST);
             }
             VehicleType vt = ovt.get();
             vt.setName(vehicleTypeName);
@@ -130,7 +128,7 @@ public class DatabaseController {
                 return new ResponseEntity<String>("Name for this vehicle type already exist.", HttpStatus.BAD_REQUEST);
             }
             Optional<Company> oc = companyRepository.findById(createVTDTO.getCompanyId());
-            if (! oc.isPresent() /*|| ! oc.get().getName().equals(createVTDTO.getCompanyName().getName())*/)
+            if (! oc.isPresent())
             {
                 return new ResponseEntity<String>("This company doesn't exist.", HttpStatus.BAD_REQUEST);
             }
@@ -144,5 +142,103 @@ public class DatabaseController {
         }
     }
 
-    
+    @GetMapping("/allCompany")
+    public ResponseEntity<String> getAllCompany(){
+        try {
+            List<CompanyDTO> res = companyRepository.findAll().stream()
+            .map(company -> new CompanyDTO(
+                company.getId(),
+                company.getName()
+            ))
+            .collect(Collectors.toList());
+            String resJson = objectMapper.writeValueAsString(res);
+            return ResponseEntity.ok(resJson);
+        } 
+        catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/companyByID")
+    public ResponseEntity<String> getCompanyByID(@RequestBody Integer companyID){
+        try {
+            Optional<Company> oc = companyRepository.findById(companyID);
+            if (! oc.isPresent()) {
+                return new ResponseEntity<String>("This company doesn't exist.", HttpStatus.BAD_REQUEST);
+            }
+            Company c = oc.get();
+            CompanyDTO res = new CompanyDTO(c.getId(), c.getName());
+            String resJson = objectMapper.writeValueAsString(res);
+            return ResponseEntity.ok(resJson);
+        } 
+        catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    // http://localhost:8081/putCompany?cID=1&companyName=test
+    @PutMapping("/putCompany")
+    public ResponseEntity<String> putCompany(@RequestParam Integer cID, @RequestParam String companyName){
+        try {
+            Optional<Company> oc = companyRepository.findById(cID);
+            if (! oc.isPresent()) {
+                return new ResponseEntity<String>("Company to change doesn't exist.", HttpStatus.BAD_REQUEST);
+            }
+            Company c = oc.get();
+            c.setName(companyName);
+            companyRepository.save(c);
+            CompanyDTO res = new CompanyDTO(
+                c.getId(),
+                c.getName());
+            return ResponseEntity.ok(objectMapper.writeValueAsString(res));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    // http://localhost:8081/postCompany?companyName=test
+    @PostMapping("/postCompany")
+    public ResponseEntity<String> postCompany(@RequestParam String companyName)
+    {
+        try {
+            Optional<Company> oc = companyRepository.checkCompanyExistence(companyName);
+            if (oc.isPresent())
+            {
+                return new ResponseEntity<String>("Name for this company already exist.", HttpStatus.BAD_REQUEST);
+            }
+            Company newCompany = new Company(companyName);
+            newCompany = companyRepository.save(newCompany);
+            return ResponseEntity.ok(companyName);
+        }
+         catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @Transactional
+    @DeleteMapping("/deleteCompany")
+    public ResponseEntity<String> deleteCompany(@RequestParam Integer cID){
+        try {
+            Optional<Company> oc = companyRepository.findById(cID);
+            if (! oc.isPresent()) {
+                return new ResponseEntity<String>("Company to delete doesn't exist.", HttpStatus.BAD_REQUEST);
+            }
+            Company c = oc.get();
+            CompanyDTO res = new CompanyDTO(
+                c.getId(),
+                c.getName());
+            companyRepository.deleteCompVehicule(cID);
+            companyRepository.deleteCompVT(cID);
+            companyRepository.deleteCompany(cID);
+            return ResponseEntity.ok(objectMapper.writeValueAsString(res));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }
