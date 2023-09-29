@@ -2,7 +2,7 @@ package com.epita.cloud.controller;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,9 +19,8 @@ import com.epita.cloud.dto.CompanyDTO;
 import com.epita.cloud.dto.CreateVTDTO;
 import com.epita.cloud.model.Company;
 import com.epita.cloud.model.VehicleType;
-import com.epita.cloud.services.CompanyRepository;
-import com.epita.cloud.services.VehicleRepository;
-import com.epita.cloud.services.VehicleTypeRepository;
+import com.epita.cloud.service.CompanyService;
+import com.epita.cloud.service.VehicleTypeService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -30,25 +29,17 @@ import jakarta.transaction.Transactional;
 @RestController
 public class DatabaseController {
     ObjectMapper objectMapper = new ObjectMapper();
-    @Autowired
-    private VehicleRepository vehicleRepository;
-    @Autowired
-    public VehicleTypeRepository vehicleTypeRepository;
-    @Autowired
-    private CompanyRepository companyRepository;
 
+    @Autowired
+    public VehicleTypeService vehicleTypeService;
+    @Autowired
+    public CompanyService companyService;
+
+    // This method retrieves and returns all vehicle types present in the database.
     @GetMapping("/allVehicleTypes")
     public ResponseEntity<String> getAllVehicleTypes(){
         try {
-            List<VehicleTypeDTO> res = vehicleTypeRepository.findAll().stream()
-            .map(vehicleType -> new VehicleTypeDTO(
-                vehicleType.getId(),
-                vehicleType.getName(),
-                vehicleType.getCapacity(),
-                vehicleType.getManufacturer(),
-                vehicleType.getCompany()
-            ))
-            .collect(Collectors.toList());
+            List<VehicleTypeDTO> res = vehicleTypeService.getAllVehicleTypes();
             String resJson = objectMapper.writeValueAsString(res);
             return ResponseEntity.ok(resJson);
         } 
@@ -58,10 +49,11 @@ public class DatabaseController {
         }
     }
 
+    // This method searches for a company based on a given vehicle's VIN and returns the name of the company associated with that VIN.
     @GetMapping("/CompanyByVin")
     public ResponseEntity<String> getCompanyByVin(@RequestBody String vin){
         try {
-            String res = companyRepository.findCompanyNameByVin(vin);
+            String res = companyService.findCompanyNameByVin(vin);
             if (res == null || res.length() == 0) {
                 return new ResponseEntity<String>("Vin doesn't match any company.", HttpStatus.BAD_REQUEST);
             }
@@ -72,12 +64,13 @@ public class DatabaseController {
         }
     }
 
+    // This method counts the number of vehicle types that match a given vehicle type name and returns this count.
     @GetMapping("/NbVehicleType")
-    public ResponseEntity<Integer> getNbVehicleType(@RequestBody String vehicleTypeName){
+    public ResponseEntity<?> getNbVehicleType(@RequestBody String vehicleTypeName){
         try {
-            Integer res = vehicleTypeRepository.findAllVehicleType(vehicleTypeName).size();
+            Integer res = vehicleTypeService.getNbVehicleType(vehicleTypeName);
             if (res == 0) {
-                return new ResponseEntity<Integer>(-1, HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<String>("Bad vehicle type name.", HttpStatus.BAD_REQUEST);
             }
             return ResponseEntity.ok(res);
         } catch (Exception e) {
@@ -86,18 +79,19 @@ public class DatabaseController {
         }
     }
 
-    // http://localhost:8081/putVT?VtID=1&vehicleTypeName=test&passengerNumber=5
+    // This method updates the details of an existing vehicle type based on the vehicle type ID, vehicle type name, and passenger number.
+    @Transactional
     @PutMapping("/putVT")
     public ResponseEntity<String> putVehicleType(@RequestParam Integer VtID, @RequestParam String vehicleTypeName, @RequestParam Integer passengerNumber){
         try {
-            Optional<VehicleType> ovt = vehicleTypeRepository.findById(VtID);
+            Optional<VehicleType> ovt = vehicleTypeService.findVehiculeByID(VtID);
             if (! ovt.isPresent()) {
                 return new ResponseEntity<String>("Vehicle type to change doesn't exist.", HttpStatus.BAD_REQUEST);
             }
             VehicleType vt = ovt.get();
             vt.setName(vehicleTypeName);
             vt.setCapacity(passengerNumber);
-            vehicleTypeRepository.save(vt);
+            vehicleTypeService.save(vt);
             VehicleTypeDTO res = new VehicleTypeDTO(
                 vt.getId(),
                 vt.getName(),
@@ -111,29 +105,32 @@ public class DatabaseController {
         }
     }
 
-
-    // {
-    //     "name": "Tramwa",
-    //     "capacity": 5,
-    //     "manufacturer": "FabricantDuVehicule",
-    //     "companyId": 1
-    // }
+    // This method creates a new vehicle type based on the provided information such as name, capacity, manufacturer, and company ID.
+    @Transactional
     @PostMapping("/postVT")
     public ResponseEntity<String> postVT(@RequestBody CreateVTDTO createVTDTO)
     {
         try {
-            Optional<VehicleType> ovt = vehicleTypeRepository.checkVTExistence(createVTDTO.getName());
+            if (createVTDTO.getName() == null || createVTDTO.getCapacity() == null || createVTDTO.getCompanyId() == null)
+            {
+                return new ResponseEntity<String>("Invalid body, missing argument.", HttpStatus.BAD_REQUEST);
+            }
+            if (createVTDTO.getManufacturer() == null)
+            {
+                createVTDTO.setManufacturer("");
+            }
+            Optional<VehicleType> ovt = vehicleTypeService.checkVTExistence(createVTDTO.getName());
             if (ovt.isPresent())
             {
                 return new ResponseEntity<String>("Name for this vehicle type already exist.", HttpStatus.BAD_REQUEST);
             }
-            Optional<Company> oc = companyRepository.findById(createVTDTO.getCompanyId());
+            Optional<Company> oc = companyService.findCompanyByID(createVTDTO.getCompanyId());
             if (! oc.isPresent())
             {
                 return new ResponseEntity<String>("This company doesn't exist.", HttpStatus.BAD_REQUEST);
             }
             VehicleType newVT = new VehicleType(createVTDTO.getName(), createVTDTO.getCapacity(),createVTDTO.getManufacturer(),oc.get());
-            newVT = vehicleTypeRepository.save(newVT);
+            newVT = vehicleTypeService.save(newVT);
             return ResponseEntity.ok(objectMapper.writeValueAsString(createVTDTO));
         }
          catch (Exception e) {
@@ -142,15 +139,11 @@ public class DatabaseController {
         }
     }
 
+    // This method retrieves and returns all companies present in the database.
     @GetMapping("/allCompany")
     public ResponseEntity<String> getAllCompany(){
         try {
-            List<CompanyDTO> res = companyRepository.findAll().stream()
-            .map(company -> new CompanyDTO(
-                company.getId(),
-                company.getName()
-            ))
-            .collect(Collectors.toList());
+            List<CompanyDTO> res = companyService.getAllCompany();
             String resJson = objectMapper.writeValueAsString(res);
             return ResponseEntity.ok(resJson);
         } 
@@ -160,10 +153,11 @@ public class DatabaseController {
         }
     }
 
+    // This method retrieves a company by its ID and returns its details.
     @GetMapping("/companyByID")
     public ResponseEntity<String> getCompanyByID(@RequestBody Integer companyID){
         try {
-            Optional<Company> oc = companyRepository.findById(companyID);
+            Optional<Company> oc = companyService.findCompanyByID(companyID);
             if (! oc.isPresent()) {
                 return new ResponseEntity<String>("This company doesn't exist.", HttpStatus.BAD_REQUEST);
             }
@@ -178,17 +172,18 @@ public class DatabaseController {
         }
     }
 
-    // http://localhost:8081/putCompany?cID=1&companyName=test
+    // This method updates the name of an existing company based on its ID.
+    @Transactional
     @PutMapping("/putCompany")
     public ResponseEntity<String> putCompany(@RequestParam Integer cID, @RequestParam String companyName){
         try {
-            Optional<Company> oc = companyRepository.findById(cID);
+            Optional<Company> oc = companyService.findCompanyByID(cID);
             if (! oc.isPresent()) {
                 return new ResponseEntity<String>("Company to change doesn't exist.", HttpStatus.BAD_REQUEST);
             }
             Company c = oc.get();
             c.setName(companyName);
-            companyRepository.save(c);
+            companyService.save(c);
             CompanyDTO res = new CompanyDTO(
                 c.getId(),
                 c.getName());
@@ -199,18 +194,19 @@ public class DatabaseController {
         }
     }
 
-    // http://localhost:8081/postCompany?companyName=test
+    // This method creates a new company with the provided name.
+    @Transactional
     @PostMapping("/postCompany")
     public ResponseEntity<String> postCompany(@RequestParam String companyName)
     {
         try {
-            Optional<Company> oc = companyRepository.checkCompanyExistence(companyName);
+            Optional<Company> oc = companyService.checkCompanyExistence(companyName);
             if (oc.isPresent())
             {
                 return new ResponseEntity<String>("Name for this company already exist.", HttpStatus.BAD_REQUEST);
             }
             Company newCompany = new Company(companyName);
-            newCompany = companyRepository.save(newCompany);
+            newCompany = companyService.save(newCompany);
             return ResponseEntity.ok(companyName);
         }
          catch (Exception e) {
@@ -219,11 +215,12 @@ public class DatabaseController {
         }
     }
 
+    // This method deletes a company and all associated entities (vehicle types and vehicles) based on the company's ID.
     @Transactional
     @DeleteMapping("/deleteCompany")
     public ResponseEntity<String> deleteCompany(@RequestParam Integer cID){
         try {
-            Optional<Company> oc = companyRepository.findById(cID);
+            Optional<Company> oc = companyService.findCompanyByID(cID);
             if (! oc.isPresent()) {
                 return new ResponseEntity<String>("Company to delete doesn't exist.", HttpStatus.BAD_REQUEST);
             }
@@ -231,14 +228,13 @@ public class DatabaseController {
             CompanyDTO res = new CompanyDTO(
                 c.getId(),
                 c.getName());
-            companyRepository.deleteCompVehicule(cID);
-            companyRepository.deleteCompVT(cID);
-            companyRepository.deleteCompany(cID);
+            companyService.deleteCompVehicule(cID);
+            companyService.deleteCompVT(cID);
+            companyService.deleteCompany(cID);
             return ResponseEntity.ok(objectMapper.writeValueAsString(res));
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 }

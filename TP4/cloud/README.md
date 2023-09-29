@@ -32,7 +32,7 @@ Body :
 {
 "name": "Test1",
 "capacity": 5,
-"manufacturer": "FabricantDuVehicule",
+"manufacturer": "Manufacturer",
 "companyId": 1
 }
 

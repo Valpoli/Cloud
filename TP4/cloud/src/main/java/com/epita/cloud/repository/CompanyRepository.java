@@ -1,12 +1,14 @@
-package com.epita.cloud.services;
+package com.epita.cloud.repository;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import com.epita.cloud.model.Company;
 
+@Repository
 public interface CompanyRepository extends JpaRepository<Company, Integer> {
     
     @Query("SELECT c.name FROM Vehicle v " +

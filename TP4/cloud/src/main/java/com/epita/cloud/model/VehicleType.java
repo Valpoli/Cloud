@@ -15,8 +15,8 @@ import jakarta.persistence.Table;
 @Table(name = "VEHICLE_TYPE")
 public class VehicleType {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator="seq")
-    @GenericGenerator(name = "seq", strategy="increment")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator="seqVehicleType")
+    @GenericGenerator(name = "seqVehicleType", strategy="increment")
     @Column(name = "ID")
     private Integer id;
 

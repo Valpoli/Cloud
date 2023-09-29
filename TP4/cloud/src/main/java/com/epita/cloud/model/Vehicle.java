@@ -16,8 +16,8 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name = "VEHICLE")
 public class Vehicle {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator="seq")
-    @GenericGenerator(name = "seq", strategy="increment")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator="seqVehicle")
+    @GenericGenerator(name = "seqVehicle", strategy="increment")
     @Column(name = "ID")
     private Integer id;
 
