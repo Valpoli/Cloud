@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +27,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.transaction.Transactional;
 
+@CrossOrigin(origins = "http://localhost:8082")
 @RestController
 public class DatabaseController {
     ObjectMapper objectMapper = new ObjectMapper();
@@ -68,6 +70,7 @@ public class DatabaseController {
     @GetMapping("/NbVehicleType")
     public ResponseEntity<?> getNbVehicleType(@RequestBody String vehicleTypeName){
         try {
+            System.out.println(vehicleTypeName);
             Integer res = vehicleTypeService.getNbVehicleType(vehicleTypeName);
             if (res == 0) {
                 return new ResponseEntity<String>("Bad vehicle type name.", HttpStatus.BAD_REQUEST);
