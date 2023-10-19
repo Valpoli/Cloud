@@ -33,6 +33,7 @@ public class VehicleTypeService {
 
     public Integer getNbVehicleType(String vehicleTypeName)
     {
+        //count
         return vehicleTypeRepository.findAllVehicleType(vehicleTypeName).size();
     }
 

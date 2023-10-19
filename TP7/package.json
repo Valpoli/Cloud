@@ -1,5 +1,5 @@
 {
-  "name": "tp7",
+  "name": "telematic",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -8,14 +8,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "axios": "^0.21.4",
     "vue": "^3.3.4"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.3.4",
     "vite": "^4.4.9"
-  },
-  "description": "This template should help get you started developing with Vue 3 in Vite.",
-  "main": "vite.config.js",
-  "author": "",
-  "license": "ISC"
+  }
 }
