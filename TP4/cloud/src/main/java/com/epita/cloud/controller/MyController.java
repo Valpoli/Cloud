@@ -1,6 +1,5 @@
 package com.epita.cloud.controller;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,9 +10,6 @@ import com.epita.cloud.dto.TelematicsDTO;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-
-import jakarta.validation.Valid;
-
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

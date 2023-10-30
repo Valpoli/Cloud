@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.epita.cloud.dto.VehicleTypeDTO;
 import com.epita.cloud.dto.CompanyDTO;
 import com.epita.cloud.dto.CreateVTDTO;
+import com.epita.cloud.dto.PutVehiculeTypeDTO;
 import com.epita.cloud.model.Company;
 import com.epita.cloud.model.VehicleType;
 import com.epita.cloud.service.CompanyService;
@@ -27,7 +28,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.transaction.Transactional;
 
-@CrossOrigin(origins = "http://localhost:8082")
+// @CrossOrigin(origins = "http://localhost:5173")
+
+@CrossOrigin(origins = {"http://localhost:5173", "http://localhost:5177", "http://localhost/"})
+// @CrossOrigin(origins = "http://localhost:80")?
+
 @RestController
 public class DatabaseController {
     ObjectMapper objectMapper = new ObjectMapper();
@@ -68,9 +73,8 @@ public class DatabaseController {
 
     // This method counts the number of vehicle types that match a given vehicle type name and returns this count.
     @GetMapping("/NbVehicleType")
-    public ResponseEntity<?> getNbVehicleType(@RequestBody String vehicleTypeName){
+    public ResponseEntity<?> getNbVehicleType(@RequestParam String vehicleTypeName){
         try {
-            System.out.println(vehicleTypeName);
             Integer res = vehicleTypeService.getNbVehicleType(vehicleTypeName);
             if (res == 0) {
                 return new ResponseEntity<String>("Bad vehicle type name.", HttpStatus.BAD_REQUEST);
@@ -85,15 +89,19 @@ public class DatabaseController {
     // This method updates the details of an existing vehicle type based on the vehicle type ID, vehicle type name, and passenger number.
     @Transactional
     @PutMapping("/putVT")
-    public ResponseEntity<String> putVehicleType(@RequestParam Integer VtID, @RequestParam String vehicleTypeName, @RequestParam Integer passengerNumber){
+    public ResponseEntity<String> putVehicleType(@RequestBody PutVehiculeTypeDTO putVehiculeTypeDTO){
         try {
-            Optional<VehicleType> ovt = vehicleTypeService.findVehiculeByID(VtID);
+            if (putVehiculeTypeDTO.getVtID() == null || putVehiculeTypeDTO.getPassengerNumber() == null || putVehiculeTypeDTO.getVehicleTypeName() == null)
+            {
+                return new ResponseEntity<String>("Invalid body, missing argument.", HttpStatus.BAD_REQUEST);
+            }
+            Optional<VehicleType> ovt = vehicleTypeService.findVehiculeByID(putVehiculeTypeDTO.getVtID());
             if (! ovt.isPresent()) {
                 return new ResponseEntity<String>("Vehicle type to change doesn't exist.", HttpStatus.BAD_REQUEST);
             }
             VehicleType vt = ovt.get();
-            vt.setName(vehicleTypeName);
-            vt.setCapacity(passengerNumber);
+            vt.setName(putVehiculeTypeDTO.getVehicleTypeName());
+            vt.setCapacity(putVehiculeTypeDTO.getPassengerNumber());
             vehicleTypeService.save(vt);
             VehicleTypeDTO res = new VehicleTypeDTO(
                 vt.getId(),
@@ -114,6 +122,10 @@ public class DatabaseController {
     public ResponseEntity<String> postVT(@RequestBody CreateVTDTO createVTDTO)
     {
         try {
+            System.out.println(createVTDTO.getName());
+            System.out.println(createVTDTO.getCapacity());
+            System.out.println(createVTDTO.getManufacturer());
+            System.out.println(createVTDTO.getCompanyId());
             if (createVTDTO.getName() == null || createVTDTO.getCapacity() == null || createVTDTO.getCompanyId() == null)
             {
                 return new ResponseEntity<String>("Invalid body, missing argument.", HttpStatus.BAD_REQUEST);

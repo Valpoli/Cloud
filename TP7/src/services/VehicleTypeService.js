@@ -14,39 +14,45 @@ class VehiculeTypeService {
     }
 
     getNbVehicleType (vehicleTypeName){
-        try {
-            console.log(vehicleTypeName)
-            const response = axios.get(apiUrl + "NbVehicleType",vehicleTypeName, {
+        try {        
+            return axios.get(apiUrl + "NbVehicleType",{
+            params: {
+              vehicleTypeName: vehicleTypeName
+            },
                 headers: {
-                    'Content-Type': 'text/plain'
+                    'Content-Type': 'application/json'
                 }
             });
-            console.log(response)
-            return response.data;
             } catch (error) {
             console.error('Error fetching number of vehicle type:', error);
         }
     };
 
-    putVehicleType (VtID, vehicleTypeName, passengerNumber){
+
+    putVehicleType (vtID, vehicleTypeName, passengerNumber){
         try {
-          const response = axios.put(apiUrl + "putVT", null, {
-            params: {
-              VtID,
-              vehicleTypeName,
-              passengerNumber
-            }
-          });
-          return response.data;
+          vtID = 1,
+          vehicleTypeName = "test",
+          passengerNumber = 5
+          return axios.put(apiUrl + "putVT", {
+            vtID: vtID,
+            vehicleTypeName: vehicleTypeName,
+            passengerNumber: passengerNumber
+        });
         } catch (error) {
           console.error('Error updating vehicle type:', error);
         }
     };
 
-    postVT (createVTDTO){
+    postVT (name, capacity, manufacturer, companyId){
         try {
-          const response = axios.post(apiUrl + "postVT", createVTDTO);
-          return response.data;
+
+          return axios.post(apiUrl + "postVT", {
+            name : "test3",
+            capacity : 77,
+            manufacturer : "Manufacturer",
+            companyId : 1
+        });
         } catch (error) {
           console.error('Error creating vehicle type:', error);
         }

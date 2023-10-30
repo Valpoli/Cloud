@@ -26,4 +26,10 @@ services:
     image: telematics
     restart: on-failure:1
     ports:
-      - "8080:8080"
+      - "8081:8081"
+      
+  nginx:
+    image: cloud:latest
+    restart: on-failure:1
+    ports:
+      - "5177:80"
