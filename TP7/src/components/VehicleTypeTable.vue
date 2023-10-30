@@ -8,6 +8,7 @@
           <th>Capacity</th>
           <th>Manufacturer</th>
           <th>Company Name</th>
+          <th>number in circulation</th>
         </tr>
       </thead>
       <tbody>
@@ -17,6 +18,7 @@
           <td>{{ vehicleType.capacity }}</td>
           <td>{{ vehicleType.manufacturer }}</td>
           <td>{{ vehicleType.companyName.name }}</td>
+          <td>{{ vehicleType["number in circulation"] }}</td>
         </tr>
       </tbody>
     </table>

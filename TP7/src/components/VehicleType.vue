@@ -5,14 +5,25 @@ import VehicleTypeTable from './VehicleTypeTable.vue';
 
 
 const allVehiculeTypes = ref("");
-
-
 const nbByVehiculeType = ref([]);
+
+const initialisation = async () => {
+    try {
+        const response = await VehicleTypeService.getAllVehicleTypes();
+        const resNbVehiculeType = await VehicleTypeService.addNbVehiculesByTypes(response.data)
+        nbByVehiculeType.value = resNbVehiculeType
+        allVehiculeTypes.value = VehicleTypeService.addNumberInCirculation(response.data,nbByVehiculeType.value)
+    } catch (error) {
+        allVehiculeTypes.value = error;
+        console.error(error);
+    }
+  }
+
 
 const updatePrinting = async () => {
     try {
         const response = await VehicleTypeService.getAllVehicleTypes();
-        allVehiculeTypes.value = response.data;
+        allVehiculeTypes.value = VehicleTypeService.addNumberInCirculation(response.data,nbByVehiculeType.value)
     } catch (error) {
         allVehiculeTypes.value = error;
         console.error(error);
@@ -26,7 +37,7 @@ onUnmounted(() => {
 });
 
 onMounted(() => {
-  updatePrinting();
+  initialisation();
   intervalId = setInterval(updatePrinting, 5000);
 });
 

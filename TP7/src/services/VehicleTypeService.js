@@ -28,6 +28,43 @@ class VehiculeTypeService {
         }
     };
 
+    async addNbVehiculesByTypes(vehicleTypes) {
+        let res = []
+        try {
+        for (const vehicleType of vehicleTypes) {
+                const response = await this.getNbVehicleType(vehicleType.name);
+                if (response && response.data) {
+                    res.push(response.data)
+                }
+            } 
+        }
+        catch (error) {
+                console.error('Error fetching number of vehicle type:', error);
+        }
+        return res
+    }
+
+    addNumberInCirculation(vehicleList, circulationNumbers) {
+        circulationNumbers = JSON.parse(JSON.stringify(circulationNumbers));
+        if (vehicleList.length !== circulationNumbers.length) {
+            console.log(vehicleList.length)
+            console.log(circulationNumbers.length)
+            for (let i = 0; i < vehicleList.length; i++) {
+                vehicleList[i]['number in circulation'] = 0;
+            }
+            console.error('Les deux listes doivent avoir la même longueur.');
+        }
+        else
+        {
+            for (let i = 0; i < vehicleList.length; i++) {
+                vehicleList[i]['number in circulation'] = circulationNumbers[i];
+            }
+        }
+    
+        return vehicleList;
+    }
+    
+
 
     putVehicleType (vtID, vehicleTypeName, passengerNumber){
         try {
