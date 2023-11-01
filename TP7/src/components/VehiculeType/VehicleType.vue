@@ -5,7 +5,6 @@ import CompanyService from "../../services/CompanyService.js";
 // import VehicleTypeTable from './VehicleTypeTable.vue';
 import TableAndButtons from './TableAndButtons.vue';
 import PostVTButton from './PostVTButton.vue';
-import { defineProps } from 'vue';
 
 const allVehiculeTypes = ref([]);
 const nbByVehiculeType = ref([]);
@@ -28,7 +27,16 @@ const initialisation = async () => {
 
 const updatePrinting = async () => {
     try {
+        const resAllCompany = await CompanyService.getAllCompanies()
         const response = await VehicleTypeService.getAllVehicleTypes();
+        if (allCompany.value.length != resAllCompany.data.length)
+        {
+          console.log(allCompany.value.length)
+          console.log(resAllCompany.data.length)
+          const resNbVehiculeType = await VehicleTypeService.addNbVehiculesByTypes(response.data)
+          nbByVehiculeType.value = resNbVehiculeType
+          allCompany.value = resAllCompany.data
+        }
         allVehiculeTypes.value = VehicleTypeService.addNumberInCirculation(response.data,nbByVehiculeType.value)
     } catch (error) {
         allVehiculeTypes.value = error;

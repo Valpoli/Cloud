@@ -1,31 +1,32 @@
-# telematic
+# Launch the project
 
-This template should help get you started developing with Vue 3 in Vite.
+## In Docker :
 
-## Recommended IDE Setup
+### Build Vue application image
+docker build --pull --rm -f "TP7/Dockerfile" -t cloud:latest "TP7"
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+### Build our springboot image
+docker build --pull --rm -f "TP4/cloud/Dockerfile" -t telematics "TP4/cloud" 
 
-## Customize configuration
+### Launch our docker with docker compose
+docker compose  -f "TP2/docker-compose.yml" up -d --build nginx springboot
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+## In local
 
-## Project Setup
+### in TP7 folder
+
+#### Install dependencies
 
 ```sh
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+#### Compile and Hot-Reload for Development
 
 ```sh
 npm run dev
 ```
 
-### Compile and Minify for Production
+### in TP4 folder
 
-```sh
-npm run build
-```
-
-docker build -t nginx ../TP7
+`./mvnw spring-boot:run`
