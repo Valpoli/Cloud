@@ -1,7 +1,6 @@
 import axios from 'axios';
 const apiUrl = 'http://localhost:8081/';
 
-
 class VehiculeTypeService {
 
     getAllVehicleTypes(){
@@ -11,7 +10,7 @@ class VehiculeTypeService {
         catch (error) {
             console.error('Error fetching all vehicle types:', error);
         }
-    }
+    };
 
     getNbVehicleType (vehicleTypeName){
         try {        
@@ -42,7 +41,7 @@ class VehiculeTypeService {
                 console.error('Error fetching number of vehicle type:', error);
         }
         return res
-    }
+    };
 
     addNumberInCirculation(vehicleList, circulationNumbers) {
         circulationNumbers = JSON.parse(JSON.stringify(circulationNumbers));
@@ -62,15 +61,14 @@ class VehiculeTypeService {
         }
     
         return vehicleList;
-    }
-    
-
+    };
 
     putVehicleType (vtID, vehicleTypeName, passengerNumber){
         try {
-          vtID = 1,
-          vehicleTypeName = "test",
-          passengerNumber = 5
+            if (passengerNumber < 0)
+            {
+                passengerNumber = 0
+            }
           return axios.put(apiUrl + "putVT", {
             vtID: vtID,
             vehicleTypeName: vehicleTypeName,
@@ -81,14 +79,17 @@ class VehiculeTypeService {
         }
     };
 
-    postVT (name, capacity, manufacturer, companyId){
+    postVT(newVehicleType){
         try {
-
+            if (newVehicleType.capacity < 0)
+            {
+                newVehicleType.capacity = 1;
+            }
           return axios.post(apiUrl + "postVT", {
-            name : "test3",
-            capacity : 77,
-            manufacturer : "Manufacturer",
-            companyId : 1
+            name : newVehicleType.name,
+            capacity : newVehicleType.capacity,
+            manufacturer : newVehicleType.manufacturer,
+            companyId : newVehicleType.companyId
         });
         } catch (error) {
           console.error('Error creating vehicle type:', error);

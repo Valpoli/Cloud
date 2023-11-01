@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.epita.cloud.dto.VehicleTypeDTO;
 import com.epita.cloud.dto.CompanyDTO;
+import com.epita.cloud.dto.CreateCompDTO;
 import com.epita.cloud.dto.CreateVTDTO;
 import com.epita.cloud.dto.PutVehiculeTypeDTO;
 import com.epita.cloud.model.Company;
@@ -190,14 +191,16 @@ public class DatabaseController {
     // This method updates the name of an existing company based on its ID.
     @Transactional
     @PutMapping("/putCompany")
-    public ResponseEntity<String> putCompany(@RequestParam Integer cID, @RequestParam String companyName){
+    public ResponseEntity<String> putCompany(@RequestBody CompanyDTO companyDTO){
         try {
-            Optional<Company> oc = companyService.findCompanyByID(cID);
+            System.out.println(companyDTO.getId());
+            System.out.println(companyDTO.getName());
+            Optional<Company> oc = companyService.findCompanyByID(companyDTO.getId());
             if (! oc.isPresent()) {
                 return new ResponseEntity<String>("Company to change doesn't exist.", HttpStatus.BAD_REQUEST);
             }
             Company c = oc.get();
-            c.setName(companyName);
+            c.setName(companyDTO.getName());
             companyService.save(c);
             CompanyDTO res = new CompanyDTO(
                 c.getId(),
@@ -212,17 +215,17 @@ public class DatabaseController {
     // This method creates a new company with the provided name.
     @Transactional
     @PostMapping("/postCompany")
-    public ResponseEntity<String> postCompany(@RequestParam String companyName)
+    public ResponseEntity<String> postCompany(@RequestBody CreateCompDTO createCompDTO)
     {
         try {
-            Optional<Company> oc = companyService.checkCompanyExistence(companyName);
+            Optional<Company> oc = companyService.checkCompanyExistence(createCompDTO.getName());
             if (oc.isPresent())
             {
                 return new ResponseEntity<String>("Name for this company already exist.", HttpStatus.BAD_REQUEST);
             }
-            Company newCompany = new Company(companyName);
+            Company newCompany = new Company(createCompDTO.getName());
             newCompany = companyService.save(newCompany);
-            return ResponseEntity.ok(companyName);
+            return ResponseEntity.ok(createCompDTO.getName());
         }
          catch (Exception e) {
             e.printStackTrace();

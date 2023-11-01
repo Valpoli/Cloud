@@ -1,5 +1,6 @@
 <script setup>
-import VehicleType from './VehicleType.vue';
+import VehicleType from './VehiculeType/VehicleType.vue';
+import Company from './Company/Company.vue';
 </script>
 
 Copy code
@@ -13,11 +14,14 @@ Copy code
 
 <template>
     <header>
-        <h1>Main page</h1>
+        <h1>Processing of automated telematics data</h1>
     </header>
     <main>
         <div class="vehicle-type-container">
         <VehicleType />
+        </div>
+        <div class="vehicle-type-container">
+        <Company />
         </div>
     </main>
 </template>
