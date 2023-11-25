@@ -1,6 +1,6 @@
 
     <template>
-    <button @click="deleteCompany">Delete</button>
+    <button @click="deleteCompany" class="delete-button">Delete</button>
     </template>
 
     <script>
@@ -20,4 +20,21 @@
     }
     }
     </script>
-  
+
+<style scoped>
+.delete-button {
+  background-color: #ff6b6b; /* A strong red to signify deletion */
+  color: #ffffff; /* White text for contrast */
+  padding: 0.5em 1em;
+  border-radius: 0.3em; /* Rounded corners for the button */
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.3s ease; /* Transition for the hover effect */
+}
+
+.delete-button:hover {
+  background-color: #ff7878; /* A slightly lighter red for hover effect */
+}
+
+/* Additional styling can be added if needed */
+</style>

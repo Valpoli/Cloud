@@ -8,7 +8,7 @@
 
 ## Adresse utilisée par Nifi pour envoyer ses données au service REST
 
-* `http://springboot:8080/telematics`
+* `http://springboot:8081/telematics`
 
 ## TP5 : Persistance avec JPA et spring-boot
 
