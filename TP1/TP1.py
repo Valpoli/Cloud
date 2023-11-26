@@ -5,6 +5,7 @@ import paho.mqtt.client as paho
 import time
 import re
 import random
+import requests
 
 # function to convert a date to a timestamp
 def to_timestamp(dt):
@@ -139,8 +140,47 @@ def startSending(type, tramType,client):
             res += newTram
             client.publish(data["topicName"],newTram)
 
+# Function to find a random taxi and update its passenger number
+def update_random_taxi():
+    # Filter out the taxi vehicles
+    taxi_vehicles = [
+        vehicle for company in data['companies']
+        for vehicleType in company['vehicleTypes']
+        for vehicle in vehicleType['vehicles']
+        if vehicleType['name'] == "Independant"
+    ]
 
-#create client and start publishing 5 messages for each tram type
+    if not taxi_vehicles:
+        return "No taxi vehicles found in data."
+
+    # Select a random taxi vehicle
+    selected_taxi = random.choice(taxi_vehicles)
+
+    # Generate a random number of passengers, not exceeding the taxi's capacity
+    max_passengers = 6  # Assuming the capacity of a taxi is 6
+    passengers = random.randint(0, max_passengers)
+
+    # Create a timestamp for the current time
+    timestamp = to_timestamp(datetime.datetime.now())
+
+    # Prepare the data to send
+    telematics_data = {
+        "vehicleId": selected_taxi['vin'],
+        "localTime": str(timestamp),
+        "passengerNumber": passengers
+    }
+
+    print("Taxi " + selected_taxi['vin'] + " have now " + str(passengers) + " passengers")
+
+    # Send the data to the controller
+    try:
+        response = requests.post("http://localhost:8081/telematics", json=telematics_data)
+        return response.text
+    except requests.RequestException as e:
+        return f"Error sending data to controller: {e}"
+
+
+# main function
 def main():
     # create client object
     client = paho.Client("SSIE")
@@ -152,6 +192,7 @@ def main():
             startSending(["Alstom"], "Alstom" ,client)
         for j in range (data['numberOfMessage'] - randomNumberTram):
             startSending(["Heuliez", "EvoBus", "Poma"], "Other" ,client)
+        update_random_taxi()
         print('\n')
         time.sleep(data['frequencyInSec'])
     client.disconnect()

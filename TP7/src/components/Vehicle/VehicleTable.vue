@@ -6,15 +6,15 @@
             <th>VIN</th>
             <th>Last Message Date</th>
             <th>PNB</th>
-            <th>Vehicle Type ID</th>
+            <th>Vehicle Type</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="v in paginatedVehicle" :key="v.id">
             <td>{{ v.vin }}</td>
-            <td>{{ v.lastMsgDate | formatDate }}</td>
+            <td>{{ v.lastMsgDate == null ? 0 : v.lastMsgDate}}</td>
             <td>{{ v.pnb == null ? 0 : v.pnb }}</td>
-            <td>{{ v.vehicleTypeId }}</td>
+            <td>{{ getVehicleTypeName(v.vehicleTypeId) }}</td>
           </tr>
         </tbody>
       </table>
@@ -30,7 +30,8 @@
   <script>
   export default {
     props: {
-      vehicle: Array
+      vehicle: Array,
+      vehicleTypes: Array
     },
     data() {
       return {
@@ -48,12 +49,11 @@
         return this.vehicle.slice(start, end);
       }
     },
-    filters: {
-      formatDate(value) {
-        if (!value) return '';
-        let date = new Date(value);
-        return date.toLocaleDateString();
-      }
+    methods: {
+    getVehicleTypeName(vehicleTypeId) {
+      const type = this.vehicleTypes.find(type => type.id === vehicleTypeId);
+      return type ? type.name : 'Inconnu';
+    }
     }
   }
   </script>

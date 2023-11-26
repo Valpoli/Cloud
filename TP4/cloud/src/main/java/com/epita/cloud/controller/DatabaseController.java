@@ -42,7 +42,7 @@ import jakarta.transaction.Transactional;
 @RestController
 public class DatabaseController {
 
-    private static final Logger logger = LoggerFactory.getLogger(MyController.class);
+    private static final Logger logger = LoggerFactory.getLogger(DatabaseController.class);
     ObjectMapper objectMapper = new ObjectMapper();
 
     @Autowired
