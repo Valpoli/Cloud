@@ -4,32 +4,46 @@
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
-
   font-weight: normal;
+  display: flex; /* Ajoutez cette ligne pour utiliser flexbox */
+  flex-direction: column; /* Les enfants de #app seront disposés verticalement */
 }
 
-a,
-.green {
+/* Les liens ne seront pas soulignés et auront une couleur spécifique */
+a, .green {
   text-decoration: none;
   color: hsla(160, 100%, 37%, 1);
   transition: 0.4s;
 }
 
+/* Ajouter un arrière-plan léger lors du survol des liens */
 @media (hover: hover) {
   a:hover {
     background-color: hsla(160, 100%, 37%, 0.2);
   }
 }
 
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
+/* Body sera un flex container, centrant #app */
+body {
+  display: flex;
+  place-items: center;
+  min-height: 100vh; /* Assurez-vous que body prend toute la hauteur */
+  margin: 0; /* Supprimez la marge par défaut pour body */
+  padding: 0; /* Supprimez le padding par défaut pour body */
+}
 
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
+/* Header, Main et Footer seront flex containers */
+header, main, footer {
+  display: flex;
+  flex-direction: column; /* Dispose les enfants verticalement */
+  width: 100%; /* Assurez-vous qu'ils prennent toute la largeur */
+}
+
+/* Pour les sections à l'intérieur de main, vous pouvez également les disposer en utilisant flexbox */
+main > div {
+  display: flex;
+  flex-direction: row; /* Dispose les enfants horizontalement */
+  justify-content: space-between; /* Espacer les enfants uniformément */
+  align-items: center; /* Aligner les enfants verticalement au centre */
+  gap: 1rem; /* Ajouter un espace entre les enfants */
 }

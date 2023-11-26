@@ -6,17 +6,26 @@ import Vehicle from './Vehicle/Vehicle.vue';
 
 <template>
     <header>
-        <h1>Processing of automated telematics data</h1>
+        <div class="padding-20">
+            <h1 class="fancy-title">Processing of automated telematics data</h1>
+            <img src="@/assets/epita.png" alt="Logo" class="header-logo" />
+            <img src="@/assets/cdmRugby.svg" alt="Logo" class="header-logo" />
+            <img src="@/assets/logoToulouse.png" alt="Logo" class="header-logo" />
+        </div>
     </header>
     <main>
-        <div>
+        <div class="padding-20">
         <Vehicle />
         </div>
-        <div>
+        <div class="separator-bar"></div>
+        <div class="padding-20">
         <VehicleType />
-        </div>
-        <div>
-        <Company />
+        <Company class="margin-left"/>
         </div>
     </main>
 </template>
+
+<style>
+@import '../assets/layout.css';
+@import '../assets/table.css';
+</style>

@@ -10,4 +10,6 @@ import Main from './components/Main.vue'
 </header>
 </template>
 
-
+<style>
+/* @import './assets/layout.css'; */
+</style>

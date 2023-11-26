@@ -45,19 +45,12 @@ class vehicleTypeService {
 
     addNumberInCirculation(vehicleList, circulationNumbers) {
         circulationNumbers = JSON.parse(JSON.stringify(circulationNumbers));
-        if (vehicleList.length !== circulationNumbers.length) {
-            console.log(vehicleList.length)
-            console.log(circulationNumbers.length)
-            for (let i = 0; i < vehicleList.length; i++) {
-                vehicleList[i]['number in circulation'] = 0;
-            }
-            console.error('Les deux listes doivent avoir la même longueur.');
-        }
-        else
+        while (vehicleList.length !== circulationNumbers.length)
         {
-            for (let i = 0; i < vehicleList.length; i++) {
-                vehicleList[i]['number in circulation'] = circulationNumbers[i];
-            }
+            circulationNumbers.push(0)
+        }
+        for (let i = 0; i < vehicleList.length; i++) {
+            vehicleList[i]['number in circulation'] = circulationNumbers[i];
         }
     
         return vehicleList;

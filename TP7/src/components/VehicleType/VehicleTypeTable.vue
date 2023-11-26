@@ -1,6 +1,6 @@
 <template>
   <div>
-    <table v-if="vehicleTypes && vehicleTypes.length">
+    <table v-if="vehicleTypes && vehicleTypes.length" class="styled-table">
       <thead>
         <tr>
           <th>ID</th>

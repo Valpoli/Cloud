@@ -30,8 +30,6 @@ const updatePrinting = async () => {
         const response = await VehicleTypeService.getAllVehicleTypes();
         if (allCompany.value.length != resAllCompany.data.length)
         {
-          console.log(allCompany.value.length)
-          console.log(resAllCompany.data.length)
           const resNbvehicleType = await VehicleTypeService.addNbvehiclesByTypes(response.data)
           nbByvehicleType.value = resNbvehicleType
           allCompany.value = resAllCompany.data
@@ -63,8 +61,8 @@ onMounted(() => {
 
 <template>
   <div>
-    <h3>Vehicle Type Action</h3>
-    <div>
+    <h3 class="fancy-subtitle">Vehicle Type Action</h3>
+    <div class="bordered-container">
       Update every:
       <select v-model="updateInterval">
         <option value="1000">1 sec</option>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <table v-if="company && company.length">
+    <table v-if="company && company.length" class="styled-table">
       <thead>
         <tr>
           <th>ID</th>

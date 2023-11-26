@@ -37,8 +37,8 @@ onMounted(() => {
 
 <template>
   <div>
-    <h3>Company Actions</h3>
-    <div>
+    <h3 class="fancy-subtitle">Company Actions</h3>
+    <div class="bordered-container">
       Update every:
       <select v-model="updateInterval">
         <option value="1000">1 sec</option>

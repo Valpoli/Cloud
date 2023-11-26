@@ -14,8 +14,6 @@ class CompanyService {
 
     putCompany(cID, companyName){
         try {
-            console.log(cID)
-            console.log(companyName)
             return axios.put(apiUrl + 'putCompany', {
                 id : cID,
                 name: companyName

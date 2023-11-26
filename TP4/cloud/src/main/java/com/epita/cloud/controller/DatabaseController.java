@@ -86,9 +86,9 @@ public class DatabaseController {
     public ResponseEntity<?> getNbVehicleType(@RequestParam String vehicleTypeName){
         try {
             Integer res = vehicleTypeService.getNbVehicleType(vehicleTypeName);
-            if (res == 0) {
-                return new ResponseEntity<String>("Bad vehicle type name.", HttpStatus.BAD_REQUEST);
-            }
+            // if (res == 0) {
+            //     return new ResponseEntity<String>("Bad vehicle type name.", HttpStatus.BAD_REQUEST);
+            // }
             return ResponseEntity.ok(res);
         } catch (Exception e) {
             e.printStackTrace();
@@ -131,10 +131,6 @@ public class DatabaseController {
     public ResponseEntity<String> postVT(@RequestBody CreateVTDTO createVTDTO)
     {
         try {
-            System.out.println(createVTDTO.getName());
-            System.out.println(createVTDTO.getCapacity());
-            System.out.println(createVTDTO.getManufacturer());
-            System.out.println(createVTDTO.getCompanyId());
             if (createVTDTO.getName() == null || createVTDTO.getCapacity() == null || createVTDTO.getCompanyId() == null)
             {
                 return new ResponseEntity<String>("Invalid body, missing argument.", HttpStatus.BAD_REQUEST);
@@ -201,8 +197,6 @@ public class DatabaseController {
     @PutMapping("/putCompany")
     public ResponseEntity<String> putCompany(@RequestBody CompanyDTO companyDTO){
         try {
-            System.out.println(companyDTO.getId());
-            System.out.println(companyDTO.getName());
             Optional<Company> oc = companyService.findCompanyByID(companyDTO.getId());
             if (! oc.isPresent()) {
                 return new ResponseEntity<String>("Company to change doesn't exist.", HttpStatus.BAD_REQUEST);

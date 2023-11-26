@@ -1,10 +1,10 @@
 <template>
   <div>
-    <button v-if="!creating" @click="startCreating">Create</button>
+    <button v-if="!creating" @click="startCreating" class="button">Create</button>
 
     <div v-if="creating">
       <input v-model="name" placeholder="Name"/>
-      <button @click="createCompany">Confirm</button>
+      <button @click="createCompany" class="button">Confirm</button>
     </div>
   </div>
 </template>

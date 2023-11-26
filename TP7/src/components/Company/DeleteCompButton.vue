@@ -1,6 +1,6 @@
 
     <template>
-    <button @click="deleteCompany" class="delete-button">Delete</button>
+    <button @click="deleteCompany" class="pagination-button" >Delete</button>
     </template>
 
     <script>

@@ -1,10 +1,10 @@
 <template>
     <div>
-      <button v-if="!editing" @click="editing = true">Modify</button>
+      <button v-if="!editing" @click="editing = true" class="button">Modify</button>
       
       <div v-if="editing">
         <input v-model="vehicleTypeName" placeholder="Vehicle Type Name" />
-        <button @click="confirmChanges">Confirmer</button>
+        <button @click="confirmChanges" class="button">Confirm</button>
       </div>
     </div>
   </template>

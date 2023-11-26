@@ -1,0 +1,71 @@
+/* Style général pour le tableau */
+.styled-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 0.9em;
+  min-width: 400px;
+  border-radius: 8px 8px 0 0;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Style pour les en-têtes de tableau */
+.styled-table thead tr {
+  background-color: #2338E9; /* Bleu du thème pour les en-têtes */
+  color: #FFFDFF; /* Blanc pour le texte sur fond bleu */
+  text-align: left;
+  font-weight: bold;
+}
+
+/* Style pour les cellules de tableau */
+.styled-table th,
+.styled-table td {
+  padding: 12px 15px;
+}
+
+/* Style pour les lignes du tableau */
+.styled-table tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+/* Style pour les rangées alternées du tableau */
+.styled-table tbody tr:nth-of-type(even) {
+  background-color: #FFFDFF; /* Blanc pour le fond */
+  color: #2338E9; /* Bleu pour le texte */
+}
+
+.styled-table tbody tr:nth-of-type(odd) {
+  background-color: #2338E9; /* Bleu pour le fond */
+  color: #FFFDFF; /* Blanc pour le texte */
+}
+
+.styled-table tbody tr:last-of-type {
+  border-bottom: 2px solid #2338E9;
+}
+
+/* Style pour les boutons de pagination */
+.pagination-button {
+  background-color: #FC3500; /* Rouge du thème pour les boutons */
+  color: #FFFDFF; /* Blanc du thème pour le texte */
+  border: none;
+  padding: 10px 20px;
+  margin: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.pagination-button:disabled {
+  background-color: #cccccc;
+  color: #666666;
+}
+
+.button {
+  background-color: #979797; /* Rouge du thème pour les boutons */
+  color: #FFFDFF; /* Blanc du thème pour le texte */
+  border: none;
+  padding: 10px 20px;
+  margin: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}

@@ -1,6 +1,6 @@
 <template>
     <div>
-      <table v-if="paginatedVehicle && paginatedVehicle.length">
+      <table v-if="paginatedVehicle && paginatedVehicle.length" class="styled-table">
         <thead>
           <tr>
             <th>VIN</th>
@@ -21,9 +21,9 @@
       <div v-else>No data to display</div>
   
       <!-- Contrôles de pagination -->
-      <button @click="currentPage--" :disabled="currentPage <= 1">Précédent</button>
+      <button @click="currentPage--" :disabled="currentPage <= 1" class="pagination-button">Précédent</button>
       <span>Page {{ currentPage }} sur {{ totalPages }}</span>
-      <button @click="currentPage++" :disabled="currentPage >= totalPages">Suivant</button>
+      <button @click="currentPage++" :disabled="currentPage >= totalPages" class="pagination-button">Suivant</button>
     </div>
   </template>
   
@@ -36,7 +36,7 @@
     data() {
       return {
         currentPage: 1,
-        perPage: 15
+        perPage: 10
       };
     },
     computed: {

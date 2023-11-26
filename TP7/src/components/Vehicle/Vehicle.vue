@@ -17,8 +17,7 @@ const initialisation = async () => {
         const response = await VehicleTypeService.getAllVehicleTypes();
         allvehicleTypes.value = response.data
     } catch (error) {
-        allvehicleTypes.value = error;
-        console.error(error);
+        console.log(error);
     }
   }
 
@@ -69,8 +68,8 @@ onMounted(() => {
 
 <template>
   <div>
-    <h3>Vehicle Actions</h3>
-    <div>
+    <h2 class="fancy-subtitle">Vehicles</h2>
+    <div class="bordered-container padding-vertical">
       Update every:
       <select v-model="updateInterval">
         <option value="1000">1 sec</option>
@@ -78,16 +77,20 @@ onMounted(() => {
         <option value="5000" selected>5 sec</option>
       </select>
     </div>
+    <div class="flex-container">
     <VehicleTable :vehicle="allVehicle" :vehicleTypes="allvehicleTypes" />
-    <div>Total Passengers: {{ totalPassengers }}</div>
+    <div class="padding-left">
+    <h3 class="padding-passenger fancy-element">Total Passengers: {{ totalPassengers }}</h3>
     <div v-if="changes.length > 0">
-      <h4>Latest trams sended</h4>
+      <h4 class="fancy-element"> Latest trams sended</h4>
       <ul>
         <li v-for="change in changes" :key="change.vin">
           VIN: {{ change.vin }}, Passengers: {{ change.pnb }}
         </li>
       </ul>
     </div>
+  </div>
+  </div>
   </div>
 </template>
 
