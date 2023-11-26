@@ -1,5 +1,5 @@
 <script setup>
-import VehicleType from './VehiculeType/VehicleType.vue';
+import VehicleType from './VehicleType/VehicleType.vue';
 import Company from './Company/Company.vue';
 </script>
 

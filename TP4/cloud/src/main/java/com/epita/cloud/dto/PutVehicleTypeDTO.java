@@ -1,6 +1,6 @@
 package com.epita.cloud.dto;
 
-public class PutVehiculeTypeDTO {
+public class PutVehicleTypeDTO {
 
 
     private Integer vtID;

@@ -1,7 +1,7 @@
 import axios from 'axios';
 const apiUrl = 'http://localhost:8081/';
 
-class VehiculeTypeService {
+class vehicleTypeService {
 
     getAllVehicleTypes(){
         try {
@@ -27,7 +27,7 @@ class VehiculeTypeService {
         }
     };
 
-    async addNbVehiculesByTypes(vehicleTypes) {
+    async addNbvehiclesByTypes(vehicleTypes) {
         let res = []
         try {
         for (const vehicleType of vehicleTypes) {
@@ -96,4 +96,4 @@ class VehiculeTypeService {
         }
     };
 }
-export default new VehiculeTypeService();
+export default new vehicleTypeService();

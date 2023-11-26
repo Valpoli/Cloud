@@ -21,7 +21,7 @@ def readMsg():
     client.on_connect = on_connect
     client.on_message = on_message
     # establish connection
-    client.connect("localhost", 1883)
+    client.connect("localhost", data['port'])
     # start the network loop
     client.loop_forever()
     

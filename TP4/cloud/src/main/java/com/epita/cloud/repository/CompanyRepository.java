@@ -24,7 +24,7 @@ public interface CompanyRepository extends JpaRepository<Company, Integer> {
     @Query(value = "DELETE FROM Vehicle v " +
                 "WHERE v.vehicleType IN " +
                 "(SELECT vt FROM VehicleType vt WHERE vt.company.id = :companyId)")
-    void deleteCompVehicule(Integer companyId);
+    void deleteCompvehicle(Integer companyId);
 
     @Modifying
     @Query("DELETE FROM VehicleType vt WHERE vt.company.id = :companyId")

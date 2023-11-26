@@ -1,6 +1,6 @@
 package com.epita.cloud.dto;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class VehicleDTO {
     private Integer id;

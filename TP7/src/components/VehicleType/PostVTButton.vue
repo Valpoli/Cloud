@@ -17,7 +17,7 @@ import VehicleTypeService from "../../services/VehicleTypeService.js";
 
 export default {
   props: {
-    nbByVehiculeType: Array
+    nbByvehicleType: Array
   },
   data() {
     return {
@@ -45,7 +45,7 @@ export default {
         
         await VehicleTypeService.postVT(newVehicleType);
 
-        this.nbByVehiculeType.push(0);
+        this.nbByvehicleType.push(0);
 
         // Clear the fields after creation
         this.name = '';

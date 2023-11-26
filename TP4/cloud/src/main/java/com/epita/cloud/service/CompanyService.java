@@ -46,9 +46,9 @@ public class CompanyService {
         return companyRepository.checkCompanyExistence(companyName);
     }
 
-    public void deleteCompVehicule(Integer cID)
+    public void deleteCompvehicle(Integer cID)
     {
-        companyRepository.deleteCompVehicule(cID);
+        companyRepository.deleteCompvehicle(cID);
     }
 
     public void deleteCompVT(Integer cID)

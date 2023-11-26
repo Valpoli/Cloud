@@ -6,21 +6,21 @@ import CompanyService from "../../services/CompanyService.js";
 import TableAndButtons from './TableAndButtons.vue';
 import PostVTButton from './PostVTButton.vue';
 
-const allVehiculeTypes = ref([]);
-const nbByVehiculeType = ref([]);
+const allvehicleTypes = ref([]);
+const nbByvehicleType = ref([]);
 const updateInterval = ref(5000);
 const allCompany = ref([]);
 
 const initialisation = async () => {
     try {
         const response = await VehicleTypeService.getAllVehicleTypes();
-        const resNbVehiculeType = await VehicleTypeService.addNbVehiculesByTypes(response.data)
-        nbByVehiculeType.value = resNbVehiculeType
-        allVehiculeTypes.value = VehicleTypeService.addNumberInCirculation(response.data,nbByVehiculeType.value)
+        const resNbvehicleType = await VehicleTypeService.addNbvehiclesByTypes(response.data)
+        nbByvehicleType.value = resNbvehicleType
+        allvehicleTypes.value = VehicleTypeService.addNumberInCirculation(response.data,nbByvehicleType.value)
         const resAllCompany = await CompanyService.getAllCompanies()
         allCompany.value = resAllCompany.data
     } catch (error) {
-        allVehiculeTypes.value = error;
+        allvehicleTypes.value = error;
         console.error(error);
     }
   }
@@ -33,13 +33,13 @@ const updatePrinting = async () => {
         {
           console.log(allCompany.value.length)
           console.log(resAllCompany.data.length)
-          const resNbVehiculeType = await VehicleTypeService.addNbVehiculesByTypes(response.data)
-          nbByVehiculeType.value = resNbVehiculeType
+          const resNbvehicleType = await VehicleTypeService.addNbvehiclesByTypes(response.data)
+          nbByvehicleType.value = resNbvehicleType
           allCompany.value = resAllCompany.data
         }
-        allVehiculeTypes.value = VehicleTypeService.addNumberInCirculation(response.data,nbByVehiculeType.value)
+        allvehicleTypes.value = VehicleTypeService.addNumberInCirculation(response.data,nbByvehicleType.value)
     } catch (error) {
-        allVehiculeTypes.value = error;
+        allvehicleTypes.value = error;
         console.error(error);
     }
 };
@@ -74,10 +74,10 @@ onMounted(() => {
       </select>
     </div>
     <div class="table-and-buttons">
-      <TableAndButtons :vehicleTypes="allVehiculeTypes" />
+      <TableAndButtons :vehicleTypes="allvehicleTypes" />
     </div>
     <div class="post-button">
-      <PostVTButton :nbByVehiculeType="nbByVehiculeType" />
+      <PostVTButton :nbByvehicleType="nbByvehicleType" />
     </div>
   </div>
 </template>

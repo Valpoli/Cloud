@@ -1,9 +1,10 @@
 {
   "serverAddress":"http://localhost/ssie/tcs/veh",
+  "port": 1884,
   "topicName":"topic_ssie",
-  "tramNumber":20,
-  "frequencyInSec":1,
-  "numberOfMessage":5,
+  "tramNumber":1,
+  "frequencyInSec":5,
+  "numberOfMessage":3,
   "companies": [
       {
           "id": 1,

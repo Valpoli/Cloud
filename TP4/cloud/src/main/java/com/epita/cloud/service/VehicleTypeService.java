@@ -37,7 +37,7 @@ public class VehicleTypeService {
         return vehicleTypeRepository.findAllVehicleType(vehicleTypeName).size();
     }
 
-    public Optional<VehicleType> findVehiculeByID(Integer VtID)
+    public Optional<VehicleType> findvehicleByID(Integer VtID)
     {
         return vehicleTypeRepository.findById(VtID);
     }

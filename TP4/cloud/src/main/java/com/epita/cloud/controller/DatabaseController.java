@@ -1,5 +1,8 @@
 package com.epita.cloud.controller;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,14 +22,19 @@ import com.epita.cloud.dto.VehicleTypeDTO;
 import com.epita.cloud.dto.CompanyDTO;
 import com.epita.cloud.dto.CreateCompDTO;
 import com.epita.cloud.dto.CreateVTDTO;
-import com.epita.cloud.dto.PutVehiculeTypeDTO;
+import com.epita.cloud.dto.PutVehicleTypeDTO;
+import com.epita.cloud.dto.TelematicsDTO;
+import com.epita.cloud.dto.VehicleDTO;
 import com.epita.cloud.model.Company;
 import com.epita.cloud.model.VehicleType;
 import com.epita.cloud.service.CompanyService;
+import com.epita.cloud.service.VehicleService;
 import com.epita.cloud.service.VehicleTypeService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jakarta.transaction.Transactional;
 
 // @CrossOrigin(origins = "http://localhost:5173")
@@ -36,12 +44,16 @@ import jakarta.transaction.Transactional;
 
 @RestController
 public class DatabaseController {
+
+    private static final Logger logger = LoggerFactory.getLogger(MyController.class);
     ObjectMapper objectMapper = new ObjectMapper();
 
     @Autowired
     public VehicleTypeService vehicleTypeService;
     @Autowired
     public CompanyService companyService;
+    @Autowired
+    public VehicleService vehicleService;
 
     // This method retrieves and returns all vehicle types present in the database.
     @GetMapping("/allVehicleTypes")
@@ -90,19 +102,19 @@ public class DatabaseController {
     // This method updates the details of an existing vehicle type based on the vehicle type ID, vehicle type name, and passenger number.
     @Transactional
     @PutMapping("/putVT")
-    public ResponseEntity<String> putVehicleType(@RequestBody PutVehiculeTypeDTO putVehiculeTypeDTO){
+    public ResponseEntity<String> putVehicleType(@RequestBody PutVehicleTypeDTO putvehicleTypeDTO){
         try {
-            if (putVehiculeTypeDTO.getVtID() == null || putVehiculeTypeDTO.getPassengerNumber() == null || putVehiculeTypeDTO.getVehicleTypeName() == null)
+            if (putvehicleTypeDTO.getVtID() == null || putvehicleTypeDTO.getPassengerNumber() == null || putvehicleTypeDTO.getVehicleTypeName() == null)
             {
                 return new ResponseEntity<String>("Invalid body, missing argument.", HttpStatus.BAD_REQUEST);
             }
-            Optional<VehicleType> ovt = vehicleTypeService.findVehiculeByID(putVehiculeTypeDTO.getVtID());
+            Optional<VehicleType> ovt = vehicleTypeService.findvehicleByID(putvehicleTypeDTO.getVtID());
             if (! ovt.isPresent()) {
                 return new ResponseEntity<String>("Vehicle type to change doesn't exist.", HttpStatus.BAD_REQUEST);
             }
             VehicleType vt = ovt.get();
-            vt.setName(putVehiculeTypeDTO.getVehicleTypeName());
-            vt.setCapacity(putVehiculeTypeDTO.getPassengerNumber());
+            vt.setName(putvehicleTypeDTO.getVehicleTypeName());
+            vt.setCapacity(putvehicleTypeDTO.getPassengerNumber());
             vehicleTypeService.save(vt);
             VehicleTypeDTO res = new VehicleTypeDTO(
                 vt.getId(),
@@ -246,11 +258,46 @@ public class DatabaseController {
             CompanyDTO res = new CompanyDTO(
                 c.getId(),
                 c.getName());
-            companyService.deleteCompVehicule(cID);
+            companyService.deleteCompvehicle(cID);
             companyService.deleteCompVT(cID);
             companyService.deleteCompany(cID);
             return ResponseEntity.ok(objectMapper.writeValueAsString(res));
         } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    // This method change the passenger number and the timestamp of vehicle.
+    @Transactional
+    @PostMapping("/telematics")
+    public ResponseEntity<String> logTelematicsData(@RequestBody TelematicsDTO telematicsData) {
+        try {
+            String unixSecondsString = telematicsData.getLocalTime();
+            long unixSeconds = Long.parseLong(unixSecondsString);
+            LocalDateTime dateTime = LocalDateTime.ofEpochSecond(unixSeconds, 0, ZoneOffset.UTC);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy:MM:dd HH:mm:ss");
+            String formattedDateTime = dateTime.format(formatter);
+            logger.info("Received telematics data: VIN={}, date={}, passengers={}",
+                    telematicsData.getVehicleId(), formattedDateTime, telematicsData.getPassengerNumber());
+            String vtChanged = vehicleService.modifyVehicleInfos(telematicsData);
+            return ResponseEntity.ok(vtChanged);
+         }
+        catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    // This method retrieves and returns all vehicle types present in the database.
+    @GetMapping("/allVehicles")
+    public ResponseEntity<String> getAllVehicles(){
+        try {
+            List<VehicleDTO> res = vehicleService.getAllVehicles();
+            String resJson = objectMapper.writeValueAsString(res);
+            return ResponseEntity.ok(resJson);
+        } 
+        catch (JsonProcessingException e) {
             e.printStackTrace();
             return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

@@ -12,7 +12,7 @@ const updatePrinting = async () => {
         const response = await CompanyService.getAllCompanies()
         allCompany.value = response.data
     } catch (error) {
-        allVehiculeTypes.value = error;
+        allvehicleTypes.value = error;
         allCompany.error(error);
     }
 };

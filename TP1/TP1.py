@@ -4,6 +4,7 @@ import random
 import paho.mqtt.client as paho
 import time
 import re
+import random
 
 # function to convert a date to a timestamp
 def to_timestamp(dt):
@@ -127,21 +128,16 @@ def generateRandom(size):
     return random_numbers
 
 
-#print 'numberOfMessage' random trams at 'frequencyInSec' second interval of 'tramType type (Alstom or other)
-def startSending(numberOfMessage, type, tramType,client):
+#print random trams at 'frequencyInSec' second interval of 'tramType type (Alstom or other)
+def startSending(type, tramType,client):
     idVehicle = getAllVehicle(type)
-    for i in range(numberOfMessage):
-        random_numbers = generateRandom(len(idVehicle))
-        res = ""
-        for number in random_numbers: 
-            newTram = find_object_by_id_and_create_tram(idVehicle[number], tramType,client)
-            if (len(newTram)>0):
-                res += newTram
-                client.publish(data["topicName"],newTram)
-        #client.publish(data["topicName"], "val_" + res)
-        print('\n')
-        #mettre dans variable locale
-        time.sleep(data['frequencyInSec'])
+    random_numbers = generateRandom(len(idVehicle))
+    res = ""
+    for number in random_numbers: 
+        newTram = find_object_by_id_and_create_tram(idVehicle[number], tramType,client)
+        if (len(newTram)>0):
+            res += newTram
+            client.publish(data["topicName"],newTram)
 
 
 #create client and start publishing 5 messages for each tram type
@@ -149,9 +145,15 @@ def main():
     # create client object
     client = paho.Client("SSIE")
     # establish connection
-    client.connect("localhost", 1884)
-    startSending(data['numberOfMessage'], ["Alstom"], "Alstom" ,client)
-    startSending(data['numberOfMessage'], ["Heuliez", "EvoBus", "Poma"], "Other" ,client)
+    client.connect("localhost", data['port'])
+    while(True):
+        randomNumberTram = random.randint(0, data['numberOfMessage'])
+        for i in range (randomNumberTram):
+            startSending(["Alstom"], "Alstom" ,client)
+        for j in range (data['numberOfMessage'] - randomNumberTram):
+            startSending(["Heuliez", "EvoBus", "Poma"], "Other" ,client)
+        print('\n')
+        time.sleep(data['frequencyInSec'])
     client.disconnect()
-
+    
 main()
