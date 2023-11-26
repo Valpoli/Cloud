@@ -3,16 +3,7 @@ const apiUrl = 'http://localhost:8081/';
 
 
 class CompanyService {
-
-    // getCompanyByVin (vin){
-    //     try {
-    //       const response = axios.get(apiUrl + "CompanyByVin", { data: vin });
-    //       return response.data;
-    //     } catch (error) {
-    //       console.error('Error fetching company by VIN:', error);
-    //     }
-    // };
-
+    
     getAllCompanies(){
         try {
             return axios.get(apiUrl + 'allCompany');
@@ -20,15 +11,6 @@ class CompanyService {
             console.error('Error fetching all companies:', error);
         }
     };
-
-    // getCompanyById(companyId){
-    //     try {
-    //         const response = axios.get(apiUrl + 'companyByID', { data: companyId });
-    //         return response.data;
-    //     } catch (error) {
-    //         console.error('Error fetching company by ID:', error);
-    //     }
-    // };
 
     putCompany(cID, companyName){
         try {

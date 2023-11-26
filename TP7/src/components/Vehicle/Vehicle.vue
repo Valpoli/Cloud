@@ -1,19 +1,18 @@
 <script setup>
 import { ref, onMounted, onUnmounted, watch } from 'vue';
-import CompanyService from "../../services/CompanyService.js";
-import CompTableButtons from './CompTableButtons.vue';
-import PostCompButton from './PostCompButton.vue';
+import VehicleService from "../../services/VehicleService.js";
+import VehicleTable from './VehicleTable.vue';
 
 const updateInterval = ref(5000);
-const allCompany = ref([]);
+const allVehicle = ref([]);
 
 const updatePrinting = async () => {
     try {
-        const response = await CompanyService.getAllCompanies()
-        allCompany.value = response.data
+        const response = await VehicleService.getAllVehicles()
+        allVehicle.value = response.data
     } catch (error) {
-        allvehicleTypes.value = error;
-        allCompany.error(error);
+        allVehicle.value = error;
+        allVehicle.error(error);
     }
 };
 
@@ -37,7 +36,7 @@ onMounted(() => {
 
 <template>
   <div>
-    <h3>Company Actions</h3>
+    <h3>Vehicle Actions</h3>
     <div>
       Update every:
       <select v-model="updateInterval">
@@ -47,10 +46,7 @@ onMounted(() => {
       </select>
     </div>
     <div>
-      <CompTableButtons :company="allCompany" />
-    </div>
-    <div>
-      <PostCompButton />
+      <VehicleTable :vehicle="allVehicle" />
     </div>
   </div>
 </template>

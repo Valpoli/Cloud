@@ -63,16 +63,11 @@ class vehicleTypeService {
         return vehicleList;
     };
 
-    putVehicleType (vtID, vehicleTypeName, passengerNumber){
+    putVehicleType (vtID, vehicleTypeName){
         try {
-            if (passengerNumber < 0)
-            {
-                passengerNumber = 0
-            }
           return axios.put(apiUrl + "putVT", {
             vtID: vtID,
-            vehicleTypeName: vehicleTypeName,
-            passengerNumber: passengerNumber
+            vehicleTypeName: vehicleTypeName
         });
         } catch (error) {
           console.error('Error updating vehicle type:', error);

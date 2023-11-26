@@ -37,10 +37,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jakarta.transaction.Transactional;
 
-// @CrossOrigin(origins = "http://localhost:5173")
-
 @CrossOrigin(origins = {"http://localhost:5173", "http://localhost:5177", "http://localhost/"})
-// @CrossOrigin(origins = "http://localhost:80")?
 
 @RestController
 public class DatabaseController {
@@ -104,7 +101,7 @@ public class DatabaseController {
     @PutMapping("/putVT")
     public ResponseEntity<String> putVehicleType(@RequestBody PutVehicleTypeDTO putvehicleTypeDTO){
         try {
-            if (putvehicleTypeDTO.getVtID() == null || putvehicleTypeDTO.getPassengerNumber() == null || putvehicleTypeDTO.getVehicleTypeName() == null)
+            if (putvehicleTypeDTO.getVtID() == null || putvehicleTypeDTO.getVehicleTypeName() == null)
             {
                 return new ResponseEntity<String>("Invalid body, missing argument.", HttpStatus.BAD_REQUEST);
             }
@@ -114,7 +111,6 @@ public class DatabaseController {
             }
             VehicleType vt = ovt.get();
             vt.setName(putvehicleTypeDTO.getVehicleTypeName());
-            vt.setCapacity(putvehicleTypeDTO.getPassengerNumber());
             vehicleTypeService.save(vt);
             VehicleTypeDTO res = new VehicleTypeDTO(
                 vt.getId(),

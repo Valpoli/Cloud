@@ -3,16 +3,12 @@ package com.epita.cloud.service;
 import java.sql.Time;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.epita.cloud.dto.TelematicsDTO;
 import com.epita.cloud.dto.VehicleDTO;
 import com.epita.cloud.repository.VehicleRepository;
-
 import java.util.Date;
-import java.util.Optional;
 
 @Service
 public class VehicleService {

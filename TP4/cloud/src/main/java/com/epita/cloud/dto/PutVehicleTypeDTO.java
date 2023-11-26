@@ -5,7 +5,6 @@ public class PutVehicleTypeDTO {
 
     private Integer vtID;
     private String vehicleTypeName;
-    private Integer passengerNumber;
 
     public Integer getVtID() {
         return vtID;
@@ -15,14 +14,6 @@ public class PutVehicleTypeDTO {
         this.vtID = vtID;
     }
     
-    public Integer getPassengerNumber() {
-        return passengerNumber;
-    }
-
-    public void setPassengerNumber(Integer passengerNumber) {
-        this.passengerNumber = passengerNumber;
-    }
-
     public String getVehicleTypeName() {
         return vehicleTypeName;
     }
