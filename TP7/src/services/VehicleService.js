@@ -1,6 +1,7 @@
 
 import axios from 'axios';
 const apiUrl = 'http://localhost:8081/';
+// const apiUrl = '/telematics/';
 
 class vehicleService {
 

@@ -45,7 +45,7 @@ padding-right: 20px; /* Ajustez la valeur selon vos besoins */
 .fancy-element {
 color: var(--vt-c-accent); /* Utilisez votre couleur d'accentuation ou une autre couleur de votre choix */
 font-size: 1.2rem; /* Ajustez la taille de la police selon vos besoins */
-font-weight: bold; /* Rendre le texte en gras */
+font-weight: normal; /* Rendre le texte en gras */
 text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Ajouter un peu d'ombre pour du relief */
 margin-bottom: 1rem; /* Ajouter un peu d'espace en dessous */
 }
@@ -54,7 +54,7 @@ margin-bottom: 1rem; /* Ajouter un peu d'espace en dessous */
   .separator-bar {
     margin: 20px 0;
     height: 10px;
-    background-image: linear-gradient(to right, #2338E9, #FC3500);
+    background-image: linear-gradient(to right, #e9c123, #FC3500);
   }
   
   
@@ -78,3 +78,11 @@ margin-top: 50px;
 margin-bottom: 50px;
 }
     
+
+.back_white {
+  background-color: #fff;
+  width: 4039px;
+  text-align: center;
+  margin-left: -1725px;
+  margin-top: -32px;
+}

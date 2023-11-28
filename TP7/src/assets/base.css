@@ -23,7 +23,7 @@
 
 /* semantic color variables for this project */
 :root {
-  --vt-c-white: #2338E9; /* Fond principal */
+  --vt-c-white: #000c77; /* Fond principal */
   --vt-c-black: #FFFDFF; /* Fond secondaire ou texte sur fond clair */
   --vt-c-accent: #FC3500; /* Couleur d'accentuation pour les éléments importants */
 

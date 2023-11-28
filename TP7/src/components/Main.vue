@@ -5,9 +5,9 @@ import Vehicle from './Vehicle/Vehicle.vue';
 </script>
 
 <template>
-    <header>
+    <header class="back_white"> 
         <div class="padding-20">
-            <h1 class="fancy-title">Processing of automated telematics data</h1>
+            <h1 class="fancy-title">Toulousian Trafic RWC 2023</h1>
             <img src="@/assets/epita.png" alt="Logo" class="header-logo" />
             <img src="@/assets/cdmRugby.svg" alt="Logo" class="header-logo" />
             <img src="@/assets/logoToulouse.png" alt="Logo" class="header-logo" />
@@ -24,8 +24,3 @@ import Vehicle from './Vehicle/Vehicle.vue';
         </div>
     </main>
 </template>
-
-<style>
-@import '../assets/layout.css';
-@import '../assets/table.css';
-</style>

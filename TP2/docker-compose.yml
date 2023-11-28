@@ -29,7 +29,7 @@ services:
       - "8081:8081"
       
   nginx:
-    image: springboot
+    image: nginx
     restart: on-failure:1
     ports:
       - "5177:80"

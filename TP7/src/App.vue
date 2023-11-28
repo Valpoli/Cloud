@@ -11,5 +11,6 @@ import Main from './components/Main.vue'
 </template>
 
 <style>
-/* @import './assets/layout.css'; */
+@import '../src/assets/layout.css';
+@import '../src/assets/table.css';
 </style>

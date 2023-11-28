@@ -12,7 +12,7 @@
 
 /* Style pour les en-têtes de tableau */
 .styled-table thead tr {
-  background-color: #2338E9; /* Bleu du thème pour les en-têtes */
+  background-color: #0011ae; /* Bleu du thème pour les en-têtes */
   color: #FFFDFF; /* Blanc pour le texte sur fond bleu */
   text-align: left;
   font-weight: bold;
@@ -32,16 +32,16 @@
 /* Style pour les rangées alternées du tableau */
 .styled-table tbody tr:nth-of-type(even) {
   background-color: #FFFDFF; /* Blanc pour le fond */
-  color: #2338E9; /* Bleu pour le texte */
+  color: #0011ae; /* Bleu pour le texte */
 }
 
 .styled-table tbody tr:nth-of-type(odd) {
-  background-color: #2338E9; /* Bleu pour le fond */
+  background-color: #0011ae; /* Bleu pour le fond */
   color: #FFFDFF; /* Blanc pour le texte */
 }
 
 .styled-table tbody tr:last-of-type {
-  border-bottom: 2px solid #2338E9;
+  border-bottom: 2px solid #0011ae;
 }
 
 /* Style pour les boutons de pagination */
